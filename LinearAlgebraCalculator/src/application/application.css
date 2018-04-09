@@ -1,1 +1,53 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+#AnchorPane { 
+-fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+
+#FirstMatrix { 
+	-fx-background-color: black;
+}
+
+#SecondMatrix { 
+	-fx-background-color: black;
+}
+
+#dimension1 { 
+	   -fx-text-fill: white;
+}
+
+#dimension2 { 
+	   -fx-text-fill: white;
+}
+
+#CalculatorResultScreen { 
+		-fx-background-color: black;
+	   -fx-text-fill: white;
+}
+
+#operationTypeLabel { 
+	-fx-text-fill: white;
+	-fx-font-size: 18.0px;
+}
+
+#LeftRowLabel { 
+    -fx-text-fill: white;
+    -fx-font-size: 18.0px;
+}
+
+#RightRowLabel { 
+    -fx-text-fill: white;
+    -fx-font-size: 18.0px;
+}
+
+#LeftColLabel { 
+ -fx-text-fill: white;
+    -fx-font-size: 18.0px;
+}
+
+#RightColLabel { 
+-fx-text-fill: white;
+    -fx-font-size: 18.0px;
+}
+
+#observableArrayList { 
+  -fx-text-fill: black;
+}
