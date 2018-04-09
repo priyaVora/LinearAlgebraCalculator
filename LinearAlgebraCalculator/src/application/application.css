@@ -2,23 +2,23 @@
 -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
 
-#FirstMatrix { 
+#firstMatrix { 
 	-fx-background-color: black;
 }
 
-#SecondMatrix { 
+#secondMatrix { 
 	-fx-background-color: black;
 }
 
 #dimension1 { 
-	   -fx-text-fill: white;
+	   -fx-text-fill: black;
 }
 
 #dimension2 { 
-	   -fx-text-fill: white;
+	   -fx-text-fill: black;
 }
 
-#CalculatorResultScreen { 
+#resultPane { 
 		-fx-background-color: black;
 	   -fx-text-fill: white;
 }
