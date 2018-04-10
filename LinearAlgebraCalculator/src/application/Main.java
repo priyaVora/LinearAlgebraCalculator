@@ -18,8 +18,9 @@ public class Main extends Application {
 		scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
 
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Matrix Calculator");
 
+		primaryStage.setTitle("Matrix Calculator");
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 
