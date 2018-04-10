@@ -1,5 +1,21 @@
+#scrollMatrixOne { 
+	-fx-background-color: black;
+}
+
+#scrollMatrixTwo { 
+	-fx-background-color: black;
+}
+
 #AnchorPane { 
 -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+
+#firstMatrixAnchor { 
+	-fx-background-color: black;
+}
+
+#secondMatrixAnchor { 
+	-fx-background-color: black;
 }
 
 #firstMatrix { 
@@ -11,199 +27,23 @@
 }
 
 #gridFirstMatrix { 
-	-fx-background-color: white;
+	-fx-background-color: black;
 }
-#gridSecondMatrix { 
-	-fx-background-color: white;
+.gridSecondMatrix { 
+	-fx-background-color: black;
 }
 
-#first00{ 
+.gridTextField{ 
 	-fx-background-color: black;
 	-fx-text-fill: white;
 	-fx-border-color: yellow;
 }
 
-
-#first01{ 
+#gridTextField2{ 
 	-fx-background-color: black;
 	-fx-text-fill: white;
 	-fx-border-color: yellow;
 }
-
-
-#first02{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-#first03{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-#first10{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-
-#first11{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-
-#first12{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-#first13{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-#first20{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-
-#first21{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-
-#first22{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-#first23{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-#first30{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-
-#first31{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-
-#first32{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-#first33{ 
-	-fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;
-}
-
-#second00 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second01 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second02 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second03 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-
-#second10 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second11 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second12 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second13 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second20 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second21 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second22 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second23 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-
-#second30 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second31 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second32 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-#second33 { 
--fx-background-color: black;
-	-fx-text-fill: white;
-	-fx-border-color: yellow;	
-}
-
-
 
 #dimension1 { 
 	   -fx-text-fill: black;
