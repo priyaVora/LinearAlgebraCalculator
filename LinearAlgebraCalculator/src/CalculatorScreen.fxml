@@ -18,7 +18,7 @@
     <TextField fx:id="firstColSizeField" layoutX="136.0" layoutY="545.0" prefWidth="87.0" promptText="" />
     <TextField fx:id="secondColSizeField" layoutX="407.0" layoutY="552.0" prefWidth="87.0" promptText="" />
     <Button id="calculateButton" layoutX="494.0" layoutY="655.0" mnemonicParsing="false" onAction="#calculateButtonAction" prefWidth="98.0001220703125" text="Calculate" />
-    <ChoiceBox fx:id="operationChoiceBox" layoutX="20.0" layoutY="14.0" prefWidth="195.0">
+    <ChoiceBox fx:id="operationChoiceBox" layoutX="20.0" layoutY="14.0" prefWidth="195.00009999999747">
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Add Matrices" />
@@ -35,79 +35,8 @@
         <AnchorPane fx:id="resultPane" minHeight="0.0" minWidth="0.0" prefHeight="161.0" prefWidth="545.0" />
       </content>
     </ScrollPane>
-    <Pane id="firstMatrix" layoutX="21.0" layoutY="268.0" prefHeight="229.0" prefWidth="265.0">
-      <children>
-        <GridPane fx:id="gridFirstMatrix" layoutX="14.0" layoutY="14.0" prefHeight="201.0" prefWidth="238.0">
-          <children>
-            <TextField fx:id="first00" prefHeight="64.5" prefWidth="119.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="first01" prefHeight="65.0" prefWidth="119.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            <TextField fx:id="first10" prefHeight="58.000099999997474" prefWidth="119.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="first11" prefHeight="59.0" prefWidth="119.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="first20" prefHeight="51.0" prefWidth="59.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="first21" prefHeight="51.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="first03" prefHeight="65.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-            <TextField fx:id="first13" prefHeight="59.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField fx:id="first23" prefHeight="59.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="first30" prefHeight="50.0" prefWidth="59.0" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <TextField fx:id="first31" prefHeight="50.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="first02" prefHeight="51.0" prefWidth="48.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-            <TextField fx:id="first12" prefHeight="50.0" prefWidth="48.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField fx:id="first22" prefHeight="50.0" prefWidth="48.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField fx:id="first32" prefHeight="50.0" prefWidth="60.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <TextField fx:id="first33" prefHeight="50.0" prefWidth="60.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-          </children>
-          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          </columnConstraints>
-          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          </rowConstraints>
-        </GridPane>
-      </children>
-    </Pane>
-    <Pane id="secondMatrix" layoutX="318.0" layoutY="268.0" prefHeight="229.0" prefWidth="265.0">
-      <children>
-        <GridPane id="gridSecondMatrix" layoutX="14.0" layoutY="14.0" prefHeight="201.0" prefWidth="235.0">
-          <children>
-            <TextField fx:id="second00" prefHeight="59.0" prefWidth="118.0" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="second03" prefHeight="59.0" prefWidth="117.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-            <TextField fx:id="second10" prefHeight="59.0" prefWidth="118.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="second13" prefHeight="58.9998779296875" prefWidth="117.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField prefHeight="59.0" prefWidth="58.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="second23" prefHeight="55.0" prefWidth="59.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="second01" prefHeight="59.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            <TextField fx:id="second02" prefHeight="59.0" prefWidth="59.0" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-            <TextField fx:id="second11" prefHeight="59.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="second12" prefHeight="59.0" prefWidth="59.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField fx:id="second22" prefHeight="59.0" prefWidth="59.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField fx:id="second20" prefHeight="58.999900000002526" prefWidth="59.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="second21" prefHeight="59.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="second30" prefHeight="50.0" prefWidth="58.0" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <TextField fx:id="second31" prefHeight="50.0" prefWidth="59.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="second32" prefHeight="50.0" prefWidth="59.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <TextField fx:id="second33" prefHeight="50.0" prefWidth="59.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-          </children>
-          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          </columnConstraints>
-          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          </rowConstraints>
-        </GridPane>
-      </children>
-    </Pane>
+    <Pane id="firstMatrix" layoutX="21.0" layoutY="268.0" prefHeight="229.0" prefWidth="265.0" />
+    <Pane id="secondMatrix" layoutX="318.0" layoutY="268.0" prefHeight="229.0" prefWidth="265.0" />
     <Button fx:id="setButton" layoutX="494.0" layoutY="615.0" mnemonicParsing="false" onAction="#setAction" prefWidth="99.0" text="Set" />
   </children>
 </AnchorPane>
