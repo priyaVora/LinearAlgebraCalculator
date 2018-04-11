@@ -101,68 +101,9 @@ public class CalculatorScreen implements Initializable {
 		int col2Size = Integer.parseInt(secondColSize);
 
 		if (row1Size == row2Size && col1Size == col2Size) {
-			for (int i = 0; i < row1Size; i++) {
-				for (int j = 0; j < col1Size; j++) {
-					String name = generateMapCellName(i, j);
-					TextField field = new TextField();
-					field.getStyleClass().add(".gridTextField");
-					gridFirstMatrix.add(field, j, i);
-					mapTextField.put(name, field);
-				}
-			}
-
-			for (int i = 0; i < row2Size; i++) {
-				for (int j = 0; j < col2Size; j++) {
-					String name = generateMapCellName(i, j);
-					TextField field = new TextField();
-					field.getStyleClass().add(".gridTextField2");
-					gridSecondMatrix.add(field, j, i);
-					mapTextField2.put(name, field);
-				}
-			}
-
-			if (firstRowSize.isEmpty() && firstColSize.isEmpty() && secondRowSize.isEmpty()
-					&& secondColSize.isEmpty()) {
-				dimension1.setDisable(true);
-				dimension2.setDisable(true);
-			} else if (firstRowSize.isEmpty() || firstColSize.isEmpty() || secondRowSize.isEmpty()
-					|| secondColSize.isEmpty()) {
-				dimension1.setDisable(true);
-				dimension2.setDisable(true);
-			} else {
-				dimension1.setDisable(false);
-				dimension2.setDisable(false);
-
-				String dimensionLabelOne = firstRowSize + "X" + firstColSize;
-				String dimensionLabelTwo = secondRowSize + "X" + secondColSize;
-
-				System.out.println("First Matrix Dimension: " + dimensionLabelOne);
-				System.out.println("Second Matrix Dimension: " + dimensionLabelTwo);
-
-				if (Integer.parseInt(firstRowSize) > 10 || Integer.parseInt(firstColSize) > 10
-						|| Integer.parseInt(secondColSize) > 10 || Integer.parseInt(secondRowSize) > 10) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText("Dimensions are larger than 4X4");
-					alert.setContentText("Click on Dimension button to calculate!");
-
-					alert.showAndWait();
-
-				} else {
-					dimension1.setText(dimensionLabelOne);
-					dimension2.setText(dimensionLabelTwo);
-				}
-
-				List<String> validPositionList = new ArrayList<String>();
-				List<String> validPositionListTwo = new ArrayList<String>();
-
-				validPositionList = getValidPositions(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize));
-				System.out.println(" ");
-				validPositionListTwo = getValidPositions(Integer.parseInt(secondRowSize),
-						Integer.parseInt(secondColSize));
-			}
+			operationHelper(row1Size, col1Size, row2Size, col2Size, firstRowSize, firstColSize, secondRowSize,
+					secondColSize);
 		} else {
-			System.out.println("DIMENSIONS ARE NOT PROPER FOR ADDITION OPERATION!");
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText("Dimensions must be the same for both matrices!");
@@ -173,8 +114,69 @@ public class CalculatorScreen implements Initializable {
 		}
 	}
 
+	public void operationHelper(int row1Size, int col1Size, int row2Size, int col2Size, String firstRowSize,
+			String firstColSize, String secondRowSize, String secondColSize) {
+		for (int i = 0; i < row1Size; i++) {
+			for (int j = 0; j < col1Size; j++) {
+				String name = generateMapCellName(i, j);
+				TextField field = new TextField();
+				field.getStyleClass().add("gridTextField");
+				gridFirstMatrix.add(field, j, i);
+				mapTextField.put(name, field);
+			}
+		}
+
+		for (int i = 0; i < row2Size; i++) {
+			for (int j = 0; j < col2Size; j++) {
+				String name = generateMapCellName(i, j);
+				TextField field = new TextField();
+				field.getStyleClass().add("gridTextField2");
+				gridSecondMatrix.add(field, j, i);
+				mapTextField2.put(name, field);
+			}
+		}
+
+		if (firstRowSize.isEmpty() && firstColSize.isEmpty() && secondRowSize.isEmpty() && secondColSize.isEmpty()) {
+			dimension1.setDisable(true);
+			dimension2.setDisable(true);
+		} else if (firstRowSize.isEmpty() || firstColSize.isEmpty() || secondRowSize.isEmpty()
+				|| secondColSize.isEmpty()) {
+			dimension1.setDisable(true);
+			dimension2.setDisable(true);
+		} else {
+			dimension1.setDisable(false);
+			dimension2.setDisable(false);
+
+			String dimensionLabelOne = firstRowSize + "X" + firstColSize;
+			String dimensionLabelTwo = secondRowSize + "X" + secondColSize;
+
+			System.out.println("First Matrix Dimension: " + dimensionLabelOne);
+			System.out.println("Second Matrix Dimension: " + dimensionLabelTwo);
+
+			if (Integer.parseInt(firstRowSize) > 10 || Integer.parseInt(firstColSize) > 10
+					|| Integer.parseInt(secondColSize) > 10 || Integer.parseInt(secondRowSize) > 10) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText("Dimensions are larger than 4X4");
+				alert.setContentText("Click on Dimension button to calculate!");
+
+				alert.showAndWait();
+
+			} else {
+				dimension1.setText(dimensionLabelOne);
+				dimension2.setText(dimensionLabelTwo);
+			}
+
+			List<String> validPositionList = new ArrayList<String>();
+			List<String> validPositionListTwo = new ArrayList<String>();
+
+			validPositionList = getValidPositions(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize));
+			System.out.println(" ");
+			validPositionListTwo = getValidPositions(Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+		}
+	}
+
 	public void multiplicationOperation() {
-		System.out.println("Multiplication was selected...");
 		String firstRowSize = firstRowSizeField.getText().trim();
 		String firstColSize = firstColSizeField.getText().trim();
 		int row1Size = Integer.parseInt(firstRowSize);
@@ -187,68 +189,9 @@ public class CalculatorScreen implements Initializable {
 		int col2Size = Integer.parseInt(secondColSize);
 
 		if (row1Size == row2Size) {
-			for (int i = 0; i < row1Size; i++) {
-				for (int j = 0; j < col1Size; j++) {
-					String name = generateMapCellName(i, j);
-					TextField field = new TextField();
-					field.getStyleClass().add(".gridTextField");
-					gridFirstMatrix.add(field, j, i);
-					mapTextField.put(name, field);
-				}
-			}
-
-			for (int i = 0; i < row2Size; i++) {
-				for (int j = 0; j < col2Size; j++) {
-					String name = generateMapCellName(i, j);
-					TextField field = new TextField();
-					field.getStyleClass().add(".gridTextField2");
-					gridSecondMatrix.add(field, j, i);
-					mapTextField2.put(name, field);
-				}
-			}
-
-			if (firstRowSize.isEmpty() && firstColSize.isEmpty() && secondRowSize.isEmpty()
-					&& secondColSize.isEmpty()) {
-				dimension1.setDisable(true);
-				dimension2.setDisable(true);
-			} else if (firstRowSize.isEmpty() || firstColSize.isEmpty() || secondRowSize.isEmpty()
-					|| secondColSize.isEmpty()) {
-				dimension1.setDisable(true);
-				dimension2.setDisable(true);
-			} else {
-				dimension1.setDisable(false);
-				dimension2.setDisable(false);
-
-				String dimensionLabelOne = firstRowSize + "X" + firstColSize;
-				String dimensionLabelTwo = secondRowSize + "X" + secondColSize;
-
-				System.out.println("First Matrix Dimension: " + dimensionLabelOne);
-				System.out.println("Second Matrix Dimension: " + dimensionLabelTwo);
-
-				if (Integer.parseInt(firstRowSize) > 10 || Integer.parseInt(firstColSize) > 10
-						|| Integer.parseInt(secondColSize) > 10 || Integer.parseInt(secondRowSize) > 10) {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText("Dimensions are larger than 4X4");
-					alert.setContentText("Click on Dimension button to calculate!");
-
-					alert.showAndWait();
-
-				} else {
-					dimension1.setText(dimensionLabelOne);
-					dimension2.setText(dimensionLabelTwo);
-				}
-
-				List<String> validPositionList = new ArrayList<String>();
-				List<String> validPositionListTwo = new ArrayList<String>();
-
-				validPositionList = getValidPositions(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize));
-				System.out.println(" ");
-				validPositionListTwo = getValidPositions(Integer.parseInt(secondRowSize),
-						Integer.parseInt(secondColSize));
-			}
+			operationHelper(row1Size, col1Size, row2Size, col2Size, firstRowSize, firstColSize, secondRowSize,
+					secondColSize);
 		} else {
-			System.out.println("DIMENSIONS ARE NOT PROPER FOR ADDITION OPERATION!");
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
 			alert.setHeaderText("The column of first matrix must match the row of second matrix!");
@@ -278,10 +221,6 @@ public class CalculatorScreen implements Initializable {
 
 			alert.showAndWait();
 		}
-		// if add set result row and col
-		// if subtraction set result row and col
-		// if multiplication set result row and col
-
 	}
 
 	public List<String> getValidPositions(int rowSize, int colSize) {
@@ -300,14 +239,8 @@ public class CalculatorScreen implements Initializable {
 		return validPositionList;
 	}
 
-	@FXML
-	private void calculateButtonAction(ActionEvent event) {
-		calculateButton.setDisable(false);
-		String firstRowSize = firstRowSizeField.getText().trim();
-		String firstColSize = firstColSizeField.getText().trim();
-		String secondRowSize = secondRowSizeField.getText().trim();
-		String secondColSize = secondColSizeField.getText().trim();
-
+	private void activelySetDimensions(String firstRowSize, String firstColSize, String secondRowSize,
+			String secondColSize) {
 		if (firstRowSize.isEmpty() && firstColSize.isEmpty() && secondRowSize.isEmpty() && secondColSize.isEmpty()) {
 			dimension1.setDisable(true);
 			dimension2.setDisable(true);
@@ -322,25 +255,33 @@ public class CalculatorScreen implements Initializable {
 			String dimensionLabelOne = firstRowSize + "X" + firstColSize;
 			String dimensionLabelTwo = secondRowSize + "X" + secondColSize;
 
-			System.out.println("First Matrix Dimension: " + dimensionLabelOne);
-			System.out.println("Second Matrix Dimension: " + dimensionLabelTwo);
-
 			if (Integer.parseInt(firstRowSize) > 10 || Integer.parseInt(firstColSize) > 10
 					|| Integer.parseInt(secondColSize) > 10 || Integer.parseInt(secondRowSize) > 10) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
-				alert.setHeaderText("Dimensions are larger than 4X4");
+				alert.setHeaderText("Dimensions are larger than 10X10");
 				alert.setContentText("Click on Dimension button to calculate!");
 
 				alert.showAndWait();
 				dimension1.setText(dimensionLabelOne);
 				dimension2.setText(dimensionLabelTwo);
 			}
-
-			// Stage stageTheLabelBelongs = new Stage();
-			// stageTheLabelBelongs.setScene(new Scene(alert, 450, 450));
-			// stageTheLabelBelongs.show();
 		}
+	}
+
+	@FXML
+	private void calculateButtonAction(ActionEvent event) {
+		calculateButton.setDisable(false);
+		String firstRowSize = firstRowSizeField.getText().trim();
+		String firstColSize = firstColSizeField.getText().trim();
+		String secondRowSize = secondRowSizeField.getText().trim();
+		String secondColSize = secondColSizeField.getText().trim();
+
+		activelySetDimensions(firstRowSize, firstColSize, secondRowSize, secondColSize);
+
+		// Stage stageTheLabelBelongs = new Stage();
+		// stageTheLabelBelongs.setScene(new Scene(alert, 450, 450));
+		// stageTheLabelBelongs.show();
 	}
 
 	@FXML
