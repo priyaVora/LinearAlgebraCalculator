@@ -1,6 +1,25 @@
+
+#scrollMatrixOne { 
+	-fx-background-color: black;
+}
+
+#scrollMatrixTwo { 
+	-fx-background-color: black;
+}
+
 #AnchorPane { 
 -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
+
+
+#firstMatrixAnchor { 
+	-fx-background-color: black;
+}
+
+#secondMatrixAnchor { 
+	-fx-background-color: black;
+}
+
 
 #firstMatrix { 
 	-fx-background-color: black;
@@ -11,10 +30,23 @@
 }
 
 #gridFirstMatrix { 
-	-fx-background-color: white;
+	-fx-background-color: black;
 }
-#gridSecondMatrix { 
-	-fx-background-color: white;
+.gridSecondMatrix { 
+	-fx-background-color: black;
+}
+
+.gridTextField{ 
+	-fx-background-color: black;
+	-fx-text-fill: white;
+	-fx-border-color: yellow;
+}
+
+#gridTextField2{ 
+	-fx-background-color: black;
+	-fx-text-fill: white;
+	-fx-border-color: yellow;
+
 }
 
 #dimension1 { 
