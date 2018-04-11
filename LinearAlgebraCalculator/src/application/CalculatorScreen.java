@@ -2,31 +2,36 @@ package application;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import control.MatrixCalculator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+
+import model.Matrix;
 
 public class CalculatorScreen implements Initializable {
+	MatrixCalculator cal = new MatrixCalculator();
 	Map<String, TextField> mapTextField;
 	Map<String, TextField> mapTextField2;
+	Map<String, TextField> resultMap;
 
 	int resultRow = 0;
 	int resultCol = 0;
@@ -34,9 +39,13 @@ public class CalculatorScreen implements Initializable {
 	@FXML
 	private Button calculateButton;
 	@FXML
+	private Button showWorkButton;
+	@FXML
 	private GridPane gridFirstMatrix;
 	@FXML
 	private GridPane gridSecondMatrix;
+	@FXML
+	private GridPane resultGrid;
 	@FXML
 	private TextField firstRowSizeField;
 	@FXML
@@ -67,12 +76,16 @@ public class CalculatorScreen implements Initializable {
 	public void resetGridTextFields() {
 		mapTextField = new HashMap<>();
 		mapTextField2 = new HashMap<>();
+		resultMap = new HashMap<>();
+		showWorkButton = new Button();
+
 		operationChoiceBox = new ChoiceBox<String>();
 		operationTypeLabel = new Label();
 		calculateButton = new Button();
 		setButton = new Button();
 		gridFirstMatrix = new GridPane();
 		gridSecondMatrix = new GridPane();
+		resultGrid = new GridPane();
 		firstMatrix = new Pane();
 		secondMatrix = new Pane();
 		firstRowSizeField = new TextField();
@@ -116,6 +129,8 @@ public class CalculatorScreen implements Initializable {
 
 	public void operationHelper(int row1Size, int col1Size, int row2Size, int col2Size, String firstRowSize,
 			String firstColSize, String secondRowSize, String secondColSize) {
+			gridFirstMatrix.getChildren().clear();
+			gridSecondMatrix.getChildren().clear();
 		for (int i = 0; i < row1Size; i++) {
 			for (int j = 0; j < col1Size; j++) {
 				String name = generateMapCellName(i, j);
@@ -188,7 +203,7 @@ public class CalculatorScreen implements Initializable {
 		int row2Size = Integer.parseInt(secondRowSize);
 		int col2Size = Integer.parseInt(secondColSize);
 
-		if (row1Size == row2Size) {
+		if (col1Size == row2Size) {
 			operationHelper(row1Size, col1Size, row2Size, col2Size, firstRowSize, firstColSize, secondRowSize,
 					secondColSize);
 		} else {
@@ -204,6 +219,11 @@ public class CalculatorScreen implements Initializable {
 
 	@FXML
 	private void setAction() {
+		mapTextField = new HashMap<>();
+		mapTextField2 = new HashMap<>();
+		resultMap = new HashMap<>();
+		
+		
 		int operationIndexSelected = operationChoiceBox.getSelectionModel().getSelectedIndex();
 		String operationSelected = operationChoiceBox.getItems().get(operationIndexSelected);
 		if (operationSelected.equals("Add Matrices") || operationSelected.equals("Subtract Matrices")) {
@@ -269,8 +289,64 @@ public class CalculatorScreen implements Initializable {
 		}
 	}
 
+	public int[][] printHashMap(Map<String, TextField> map, int row, int col) {
+		int[][] dataArray = new int[row][col];
+		System.out.println("Prints Hashmap: ");
+		for (int currentRow = 0; currentRow < row; currentRow++) {
+			for (int currentCol = 0; currentCol < col; currentCol++) {
+				System.out.print(currentRow);
+				System.out.print(",");
+				System.out.print(currentCol);
+				System.out.print(" ");
+
+				String getValueFrom = "Cell_" + currentRow + "_" + currentCol;
+				System.out.println("VALUE: " + map.get(getValueFrom).getText());
+				dataArray[currentRow][currentCol] = Integer.parseInt(map.get(getValueFrom).getText().trim());
+			}
+			System.out.println(" ");
+		}
+		return dataArray;
+	}
+
+	public void matrixOperation(int row1, int col1, int row2, int col2) {
+		// I need to get the data from hashmap
+		int[][] dataOne = printHashMap(mapTextField, row1, col1);
+		int[][] dataTwo = printHashMap(mapTextField2, row2, col2);
+
+		Matrix resultMatrix = new Matrix();
+
+		Matrix a = new Matrix("FirstMatrix", row1, col1);
+		a.setCurrentMatrix(dataOne);
+		Matrix b = new Matrix("SecondMatrix", row2, col2);
+		b.setCurrentMatrix(dataTwo);
+
+		if (operationTypeLabel.getText().equals("Add Matrices")) {
+			resultMatrix = cal.addMatrices(a, b);
+		} else if (operationTypeLabel.getText().equals("Subtract Matrices")) {
+			resultMatrix = cal.subtractMatrices(a, b);
+		} else if (operationTypeLabel.getText().equals("Multiply Matrices")) {
+			resultMatrix = cal.multipyMatrices(a, b);
+			System.out.println("Row: " + resultMatrix.getRow());
+			System.out.println("Col: " + resultMatrix.getColumn());
+		}
+		resultMatrix.printMatrix();
+
+		for (int i = 0; i < resultMatrix.getRow(); i++) {
+			for (int j = 0; j < resultMatrix.getColumn(); j++) {
+				String name = generateMapCellName(i, j);
+				TextField field = new TextField();
+				field.setText("" + resultMatrix.getCurrentMatrix()[i][j]);
+				field.getStyleClass().add("gridResultTextField");
+				resultGrid.add(field, j, i);
+				resultMap.put(name, field);
+				System.out.println(resultMap.isEmpty());
+			}
+		}
+	}
+
 	@FXML
 	private void calculateButtonAction(ActionEvent event) {
+		System.out.println("Calculating...");
 		calculateButton.setDisable(false);
 		String firstRowSize = firstRowSizeField.getText().trim();
 		String firstColSize = firstColSizeField.getText().trim();
@@ -279,9 +355,22 @@ public class CalculatorScreen implements Initializable {
 
 		activelySetDimensions(firstRowSize, firstColSize, secondRowSize, secondColSize);
 
-		// Stage stageTheLabelBelongs = new Stage();
-		// stageTheLabelBelongs.setScene(new Scene(alert, 450, 450));
-		// stageTheLabelBelongs.show();
+		if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+				.equals("Add Matrices")) {
+			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+
+		} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+				.equals("Subtract Matrices")) {
+			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+
+		} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+				.equals("Multiply Matrices")) {
+			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+		}
+
 	}
 
 	@FXML
@@ -307,6 +396,9 @@ public class CalculatorScreen implements Initializable {
 				operationTypeLabel.setText(operationChoiceBox.getItems().get(indexSelected));
 				setButton.setDisable(false);
 				calculateButton.setDisable(false);
+				mapTextField = new HashMap<>();
+				mapTextField2 = new HashMap<>();
+				resultMap = new HashMap<>();
 
 			}
 		});
