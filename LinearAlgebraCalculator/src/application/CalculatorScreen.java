@@ -157,11 +157,9 @@ public class CalculatorScreen implements Initializable {
 				List<String> validPositionListTwo = new ArrayList<String>();
 
 				validPositionList = getValidPositions(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize));
-				setValidPositionsOnGrid(validPositionList, 0);
 				System.out.println(" ");
 				validPositionListTwo = getValidPositions(Integer.parseInt(secondRowSize),
 						Integer.parseInt(secondColSize));
-				setValidPositionsOnGrid(validPositionListTwo, 1);
 			}
 		} else {
 			System.out.println("DIMENSIONS ARE NOT PROPER FOR ADDITION OPERATION!");
@@ -245,11 +243,9 @@ public class CalculatorScreen implements Initializable {
 				List<String> validPositionListTwo = new ArrayList<String>();
 
 				validPositionList = getValidPositions(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize));
-				setValidPositionsOnGrid(validPositionList, 0);
 				System.out.println(" ");
 				validPositionListTwo = getValidPositions(Integer.parseInt(secondRowSize),
 						Integer.parseInt(secondColSize));
-				setValidPositionsOnGrid(validPositionListTwo, 1);
 			}
 		} else {
 			System.out.println("DIMENSIONS ARE NOT PROPER FOR ADDITION OPERATION!");
