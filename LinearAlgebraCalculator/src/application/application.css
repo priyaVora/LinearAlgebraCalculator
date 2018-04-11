@@ -1,3 +1,4 @@
+
 #scrollMatrixOne { 
 	-fx-background-color: black;
 }
@@ -10,6 +11,7 @@
 -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
 
+
 #firstMatrixAnchor { 
 	-fx-background-color: black;
 }
@@ -17,6 +19,7 @@
 #secondMatrixAnchor { 
 	-fx-background-color: black;
 }
+
 
 #firstMatrix { 
 	-fx-background-color: black;
@@ -43,6 +46,7 @@
 	-fx-background-color: black;
 	-fx-text-fill: white;
 	-fx-border-color: yellow;
+
 }
 
 #dimension1 { 

@@ -10,14 +10,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class CalculatorScreen implements Initializable {
 	Map<String, TextField> mapTextField;
@@ -276,15 +281,10 @@ public class CalculatorScreen implements Initializable {
 			alert.setContentText("Select operation type in the dropdown.");
 
 			alert.showAndWait();
-
 		}
 		// if add set result row and col
 		// if subtraction set result row and col
 		// if multiplication set result row and col
-
-	}
-
-	public void setValidPositionsOnGrid(List<String> validPositionList, int number) {
 
 	}
 
@@ -302,7 +302,6 @@ public class CalculatorScreen implements Initializable {
 			System.out.println(" ");
 		}
 		return validPositionList;
-
 	}
 
 	@FXML
@@ -371,6 +370,7 @@ public class CalculatorScreen implements Initializable {
 				operationTypeLabel.setText(operationChoiceBox.getItems().get(indexSelected));
 				setButton.setDisable(false);
 				calculateButton.setDisable(false);
+
 			}
 		});
 	}

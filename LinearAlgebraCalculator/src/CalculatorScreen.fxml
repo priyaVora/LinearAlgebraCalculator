@@ -9,6 +9,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="592.0000999999975" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.CalculatorScreen">
   <children>
+
     <TextField fx:id="secondRowSizeField" layoutX="406.0" layoutY="538.0" prefWidth="87.0" promptText="" />
     <TextField fx:id="firstRowSizeField" layoutX="128.0" layoutY="538.0" prefWidth="87.0" promptText="" />
     <Label id="LeftRowLabel" layoutX="54.0" layoutY="535.0" prefHeight="26.0" prefWidth="64.0" text="Row:" />
@@ -19,6 +20,7 @@
     <TextField fx:id="secondColSizeField" layoutX="407.0" layoutY="578.0" prefWidth="87.0" promptText="" />
     <Button fx:id="calculateButton" layoutX="482.0" layoutY="684.0" mnemonicParsing="false" onAction="#calculateButtonAction" prefWidth="98.0001220703125" text="Calculate" />
     <ChoiceBox fx:id="operationChoiceBox" layoutX="20.0" layoutY="14.0" prefWidth="195.0">
+
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Add Matrices" />
