@@ -24,6 +24,10 @@
           <String fx:value="Add Matrices" />
           <String fx:value="Subtract Matrices" />
           <String fx:value="Multiply Matrices" />
+              <String fx:value="Matrix Row Operation" />
+            <String fx:value="Matrice Transpose" />
+             <String fx:value="Inverse Matrix" />
+             <String fx:value="Determinant" />
         </FXCollections>
       </items>
     </ChoiceBox>

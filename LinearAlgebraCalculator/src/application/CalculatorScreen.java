@@ -217,6 +217,15 @@ public class CalculatorScreen implements Initializable {
 		}
 	}
 
+	public void determinantOperation() {
+		String firstRowSize = firstRowSizeField.getText().trim();
+		String firstColSize = firstColSizeField.getText().trim();
+		int row1Size = Integer.parseInt(firstRowSize);
+		int col1Size = Integer.parseInt(firstColSize);
+
+		operationHelper(row1Size, col1Size, 0, 0, firstRowSize, firstColSize, "", "");
+	}
+
 	@FXML
 	private void setAction() {
 
@@ -250,6 +259,17 @@ public class CalculatorScreen implements Initializable {
 
 				} else if (operationSelected.equals("Multiply Matrices")) {
 					multiplicationOperation();
+				} else if (operationSelected.equals("Determinant")) {
+
+					System.out.println("Determinant");
+					dimension2.setDisable(true);
+					gridSecondMatrix.setDisable(true);
+					secondColSizeField.setText("0");
+					secondRowSizeField.setText("0");
+					secondRowSizeField.setDisable(true);
+					secondColSizeField.setDisable(true);
+
+					determinantOperation();
 				} else {
 					System.out.println("User has not selected any operation...");
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -326,8 +346,16 @@ public class CalculatorScreen implements Initializable {
 				System.out.print(" ");
 
 				String getValueFrom = "Cell_" + currentRow + "_" + currentCol;
-				System.out.println("VALUE: " + map.get(getValueFrom).getText());
-				dataArray[currentRow][currentCol] = Integer.parseInt(map.get(getValueFrom).getText().trim());
+				if (map.get(getValueFrom).getText().trim().contains("/")) {
+					System.out.println("The value is a fraction...");
+					System.out.println("VALUE: " + map.get(getValueFrom).getText());
+
+				} else {
+					System.out.println("The value is not a fraction");
+					System.out.println("VALUE: " + map.get(getValueFrom).getText());
+					dataArray[currentRow][currentCol] = Double.parseDouble(map.get(getValueFrom).getText().trim());
+				}
+
 			}
 			System.out.println(" ");
 		}
@@ -338,13 +366,18 @@ public class CalculatorScreen implements Initializable {
 		// I need to get the data from hashmap
 		double[][] dataOne = printHashMap(mapTextField, row1, col1);
 		double[][] dataTwo = printHashMap(mapTextField2, row2, col2);
-
+		double determinantValue = Integer.MAX_VALUE;
 		Matrix resultMatrix = new Matrix();
 
 		Matrix a = new Matrix("FirstMatrix", row1, col1);
 		a.setCurrentMatrix(dataOne);
 		Matrix b = new Matrix("SecondMatrix", row2, col2);
 		b.setCurrentMatrix(dataTwo);
+
+		if (operationTypeLabel.getText().trim().equals("Matrix Row Operation")) {
+			double dataCurrent = cal.determinant(dataOne);
+			System.out.println("Determinant is: " + dataCurrent);
+		}
 
 		if (operationTypeLabel.getText().equals("Add Matrices")) {
 			resultMatrix = cal.addMatrices(a, b);
@@ -354,18 +387,43 @@ public class CalculatorScreen implements Initializable {
 			resultMatrix = cal.multipyMatrices(a, b);
 			System.out.println("Row: " + resultMatrix.getRow());
 			System.out.println("Col: " + resultMatrix.getColumn());
-		}
-		resultMatrix.printMatrix();
+		} else if (operationTypeLabel.getText().equals("Determinant")) {
+			dimension2.setDisable(true);
+			gridSecondMatrix.setDisable(true);
+			secondColSizeField.setText("0");
+			secondRowSizeField.setText("0");
+			secondRowSizeField.setDisable(true);
+			secondColSizeField.setDisable(true);
+			determinantValue = cal.determinant(dataOne);
+			System.out.println("Determinant Value: " + determinantValue);
 
-		for (int i = 0; i < resultMatrix.getRow(); i++) {
-			for (int j = 0; j < resultMatrix.getColumn(); j++) {
-				String name = generateMapCellName(i, j);
-				TextField field = new TextField();
-				field.setText("" + resultMatrix.getCurrentMatrix()[i][j]);
-				field.getStyleClass().add("gridResultTextField");
-				resultGrid.add(field, j, i);
-				resultMap.put(name, field);
-				System.out.println(resultMap.isEmpty());
+		}
+
+		if (operationTypeLabel.getText().equals("Determinant")) {
+			for (int i = 0; i < 1; i++) {
+				for (int j = 0; j < 1; j++) {
+					String name = generateMapCellName(i, j);
+					TextField field = new TextField();
+					field.setText("Determinant: " + determinantValue);
+					field.getStyleClass().add("gridResultTextField");
+					resultGrid.add(field, j, i);
+					resultMap.put(name, field);
+					System.out.println(resultMap.isEmpty());
+				}
+			}
+		} else {
+			resultMatrix.printMatrix();
+
+			for (int i = 0; i < resultMatrix.getRow(); i++) {
+				for (int j = 0; j < resultMatrix.getColumn(); j++) {
+					String name = generateMapCellName(i, j);
+					TextField field = new TextField();
+					field.setText("" + resultMatrix.getCurrentMatrix()[i][j]);
+					field.getStyleClass().add("gridResultTextField");
+					resultGrid.add(field, j, i);
+					resultMap.put(name, field);
+					System.out.println(resultMap.isEmpty());
+				}
 			}
 		}
 	}
@@ -405,12 +463,28 @@ public class CalculatorScreen implements Initializable {
 					.equals("Multiply Matrices")) {
 				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+			} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+					.equals("Determinant")) {
+				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+				dimension2.setDisable(true);
+				gridSecondMatrix.setDisable(true);
+				secondColSizeField.setText("0");
+				secondRowSizeField.setText("0");
+				secondRowSizeField.setDisable(true);
+				secondColSizeField.setDisable(true);
 			}
 
 			firstRowSizeField.clear();
 			firstColSizeField.clear();
-			secondRowSizeField.clear();
-			secondColSizeField.clear();
+			if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+					.equals("Determinant")) {
+				secondRowSizeField.setText("0");
+				secondColSizeField.setText("0");
+			} else {
+				secondRowSizeField.clear();
+				secondColSizeField.clear();
+			}
 
 		}
 
@@ -437,6 +511,22 @@ public class CalculatorScreen implements Initializable {
 				Integer indexSelected = operationChoiceBox.getSelectionModel().getSelectedIndex();
 				System.out.println(operationChoiceBox.getItems().get(indexSelected));
 				operationTypeLabel.setText(operationChoiceBox.getItems().get(indexSelected));
+				if (operationChoiceBox.getItems().get(indexSelected).equals("Determinant")) {
+					dimension2.setDisable(true);
+					gridSecondMatrix.setDisable(true);
+					secondColSizeField.setText("0");
+					secondRowSizeField.setText("0");
+					secondRowSizeField.setDisable(true);
+					secondColSizeField.setDisable(true);
+
+				} else {
+					dimension2.setDisable(false);
+					gridSecondMatrix.setDisable(false);
+					secondRowSizeField.setDisable(false);
+					secondColSizeField.setDisable(false);
+					secondColSizeField.clear();
+					secondRowSizeField.clear();
+				}
 				setButton.setDisable(false);
 				calculateButton.setDisable(false);
 				mapTextField = new HashMap<>();
