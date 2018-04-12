@@ -101,6 +101,21 @@ public class CalculatorScreen implements Initializable {
 		return "Cell_" + row + "_" + col;
 	}
 
+	public String doubleToFraction(double doubleVal) {
+		double negligibleRatio = 0.01;
+		String val = "";
+
+		for (int i = 1;; i++) {
+			double tem = doubleVal / (1D / i);
+			if (Math.abs(tem - Math.round(tem)) < negligibleRatio) {
+				val = Math.round(tem) + "/" + i;
+				System.out.println(Math.round(tem) + "/" + i);
+				break;
+			}
+		}
+		return val;
+	}
+
 	public void addOperation() {
 		String firstRowSize = firstRowSizeField.getText().trim();
 		String firstColSize = firstColSizeField.getText().trim();
@@ -214,7 +229,16 @@ public class CalculatorScreen implements Initializable {
 		}
 	}
 
-	public void determinantOperation() {
+	public void inverseOperation() {
+		String firstRowSize = firstRowSizeField.getText().trim();
+		String firstColSize = firstColSizeField.getText().trim();
+		int row1Size = Integer.parseInt(firstRowSize);
+		int col1Size = Integer.parseInt(firstColSize);
+
+		operationHelper(row1Size, col1Size, 0, 0, firstRowSize, firstColSize, "", "");
+	}
+
+	public void determinantAndInverseOperationSettings() {
 		String firstRowSize = firstRowSizeField.getText().trim();
 		String firstColSize = firstColSizeField.getText().trim();
 		int row1Size = Integer.parseInt(firstRowSize);
@@ -256,9 +280,7 @@ public class CalculatorScreen implements Initializable {
 
 				} else if (operationSelected.equals("Multiply Matrices")) {
 					multiplicationOperation();
-				} else if (operationSelected.equals("Determinant")) {
-
-					System.out.println("Determinant");
+				} else if (operationSelected.equals("Determinant") || operationSelected.equals("Inverse Matrix")) {
 					dimension2.setDisable(true);
 					gridSecondMatrix.setDisable(true);
 					secondColSizeField.setText("0");
@@ -266,7 +288,7 @@ public class CalculatorScreen implements Initializable {
 					secondRowSizeField.setDisable(true);
 					secondColSizeField.setDisable(true);
 
-					determinantOperation();
+					determinantAndInverseOperationSettings();
 				} else {
 					System.out.println("User has not selected any operation...");
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -371,12 +393,13 @@ public class CalculatorScreen implements Initializable {
 		Matrix b = new Matrix("SecondMatrix", row2, col2);
 		b.setCurrentMatrix(dataTwo);
 
-		if (operationTypeLabel.getText().trim().equals("Matrix Row Operation")) {
-			double dataCurrent = cal.determinant(dataOne);
-			System.out.println("Determinant is: " + dataCurrent);
-		}
+		if (operationTypeLabel.getText().trim().equals("Inverse Matrix")) {
+			double[][] dataCurrent = MatrixCalculator.inverse(dataOne);
+			resultMatrix.setCurrentMatrix(dataCurrent);
+			System.out.println("Print out: Inverse: ");
 
-		if (operationTypeLabel.getText().equals("Add Matrices")) {
+			resultMatrix.printMatrix();
+		} else if (operationTypeLabel.getText().equals("Add Matrices")) {
 			resultMatrix = cal.addMatrices(a, b);
 		} else if (operationTypeLabel.getText().equals("Subtract Matrices")) {
 			resultMatrix = cal.subtractMatrices(a, b);
@@ -402,6 +425,20 @@ public class CalculatorScreen implements Initializable {
 					String name = generateMapCellName(i, j);
 					TextField field = new TextField();
 					field.setText("Determinant: " + determinantValue);
+					field.getStyleClass().add("gridResultTextField");
+					resultGrid.add(field, j, i);
+					resultMap.put(name, field);
+					System.out.println(resultMap.isEmpty());
+				}
+			}
+		} else if (operationTypeLabel.getText().equals("Inverse Matrix")) {
+			for (int i = 0; i < resultMatrix.getCurrentMatrix().length; i++) {
+				for (int j = 0; j < resultMatrix.getCurrentMatrix()[0].length; j++) {
+					String name = generateMapCellName(i, j);
+					TextField field = new TextField();
+
+					String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
+					field.setText(positionValue);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -461,7 +498,9 @@ public class CalculatorScreen implements Initializable {
 				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
 			} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-					.equals("Determinant")) {
+					.equals("Determinant")
+					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Inverse Matrix")) {
 				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
 				dimension2.setDisable(true);
@@ -475,7 +514,9 @@ public class CalculatorScreen implements Initializable {
 			firstRowSizeField.clear();
 			firstColSizeField.clear();
 			if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-					.equals("Determinant")) {
+					.equals("Determinant")
+					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Inverse Matrix")) {
 				secondRowSizeField.setText("0");
 				secondColSizeField.setText("0");
 			} else {
@@ -508,7 +549,8 @@ public class CalculatorScreen implements Initializable {
 				Integer indexSelected = operationChoiceBox.getSelectionModel().getSelectedIndex();
 				System.out.println(operationChoiceBox.getItems().get(indexSelected));
 				operationTypeLabel.setText(operationChoiceBox.getItems().get(indexSelected));
-				if (operationChoiceBox.getItems().get(indexSelected).equals("Determinant")) {
+				if (operationChoiceBox.getItems().get(indexSelected).equals("Determinant")
+						|| operationChoiceBox.getItems().get(indexSelected).equals("Inverse Matrix")) {
 					dimension2.setDisable(true);
 					gridSecondMatrix.setDisable(true);
 					secondColSizeField.setText("0");
