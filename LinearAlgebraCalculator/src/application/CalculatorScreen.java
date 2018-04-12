@@ -219,6 +219,7 @@ public class CalculatorScreen implements Initializable {
 
 	@FXML
 	private void setAction() {
+
 		mapTextField = new HashMap<>();
 		mapTextField2 = new HashMap<>();
 		resultMap = new HashMap<>();
@@ -231,31 +232,40 @@ public class CalculatorScreen implements Initializable {
 		String firstColSize = firstColSizeField.getText().trim();
 		String secondRowSize = secondRowSizeField.getText().trim();
 		String secondColSize = secondColSizeField.getText().trim();
+		if (firstRowSizeField.getText().trim().isEmpty() || firstColSizeField.getText().trim().isEmpty()
+				|| secondRowSizeField.getText().trim().isEmpty() || secondColSizeField.getText().trim().isEmpty()) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText("You must set the row and col dimensions!");
+			alert.setContentText(" ");
 
-		if (Integer.parseInt(firstRowSize) < 7 && Integer.parseInt(firstColSize) < 7
-				&& Integer.parseInt(secondRowSize) < 7 && Integer.parseInt(secondColSize) < 7) {
-			if (operationSelected.equals("Add Matrices") || operationSelected.equals("Subtract Matrices")) {
+			alert.showAndWait();
+		} else {
 
-				addOperation();
+			if (Integer.parseInt(firstRowSize) < 7 && Integer.parseInt(firstColSize) < 7
+					&& Integer.parseInt(secondRowSize) < 7 && Integer.parseInt(secondColSize) < 7) {
+				if (operationSelected.equals("Add Matrices") || operationSelected.equals("Subtract Matrices")) {
 
-			} else if (operationSelected.equals("Multiply Matrices")) {
-				multiplicationOperation();
+					addOperation();
+
+				} else if (operationSelected.equals("Multiply Matrices")) {
+					multiplicationOperation();
+				} else {
+					System.out.println("User has not selected any operation...");
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText("Must select an operation type to continue!");
+					alert.setContentText("Select operation type in the dropdown.");
+					alert.showAndWait();
+				}
 			} else {
-				System.out.println("User has not selected any operation...");
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
-				alert.setHeaderText("Must select an operation type to continue!");
-				alert.setContentText("Select operation type in the dropdown.");
+				alert.setHeaderText("This Matrix Calculator only supports 6X6 Matrix");
+				alert.setContentText("Sorry for the inconvience.");
 
 				alert.showAndWait();
 			}
-		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Information Dialog");
-			alert.setHeaderText("This Matrix Calculator only supports 6X6 Matrix");
-			alert.setContentText("Sorry for the inconvience.");
-
-			alert.showAndWait();
 		}
 	}
 
@@ -362,29 +372,45 @@ public class CalculatorScreen implements Initializable {
 
 	@FXML
 	private void calculateButtonAction(ActionEvent event) {
-		System.out.println("Calculating...");
-		calculateButton.setDisable(false);
-		String firstRowSize = firstRowSizeField.getText().trim();
-		String firstColSize = firstColSizeField.getText().trim();
-		String secondRowSize = secondRowSizeField.getText().trim();
-		String secondColSize = secondColSizeField.getText().trim();
 
-		activelySetDimensions(firstRowSize, firstColSize, secondRowSize, secondColSize);
+		if (firstRowSizeField.getText().trim().isEmpty() || firstColSizeField.getText().trim().isEmpty()
+				|| secondRowSizeField.getText().trim().isEmpty() || secondColSizeField.getText().trim().isEmpty()) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText("The row and column is empty.");
+			alert.setContentText("Please set them to prooceed!");
 
-		if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-				.equals("Add Matrices")) {
-			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
-					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+			alert.showAndWait();
+		} else {
+			System.out.println("Calculating...");
+			calculateButton.setDisable(false);
+			String firstRowSize = firstRowSizeField.getText().trim();
+			String firstColSize = firstColSizeField.getText().trim();
+			String secondRowSize = secondRowSizeField.getText().trim();
+			String secondColSize = secondColSizeField.getText().trim();
 
-		} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-				.equals("Subtract Matrices")) {
-			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
-					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+			activelySetDimensions(firstRowSize, firstColSize, secondRowSize, secondColSize);
 
-		} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-				.equals("Multiply Matrices")) {
-			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
-					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+			if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+					.equals("Add Matrices")) {
+				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+
+			} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+					.equals("Subtract Matrices")) {
+				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+
+			} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+					.equals("Multiply Matrices")) {
+				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+			}
+
+			firstRowSizeField.clear();
+			firstColSizeField.clear();
+			secondRowSizeField.clear();
+			secondColSizeField.clear();
 
 		}
 
