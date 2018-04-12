@@ -165,9 +165,6 @@ public class CalculatorScreen implements Initializable {
 			String dimensionLabelOne = firstRowSize + "X" + firstColSize;
 			String dimensionLabelTwo = secondRowSize + "X" + secondColSize;
 
-			System.out.println("First Matrix Dimension: " + dimensionLabelOne);
-			System.out.println("Second Matrix Dimension: " + dimensionLabelTwo);
-
 			if (Integer.parseInt(firstRowSize) > 6 || Integer.parseInt(firstColSize) > 6
 					|| Integer.parseInt(secondColSize) > 6 || Integer.parseInt(secondRowSize) > 6) {
 				Alert alert = new Alert(AlertType.INFORMATION);
@@ -245,7 +242,7 @@ public class CalculatorScreen implements Initializable {
 				|| secondRowSizeField.getText().trim().isEmpty() || secondColSizeField.getText().trim().isEmpty()) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
-			alert.setHeaderText("You must set the row and col dimensions!");
+			alert.setHeaderText("You must reset the row and col dimensions!");
 			alert.setContentText(" ");
 
 			alert.showAndWait();
@@ -520,7 +517,6 @@ public class CalculatorScreen implements Initializable {
 					secondColSizeField.setDisable(true);
 
 				} else {
-					dimension2.setDisable(false);
 					gridSecondMatrix.setDisable(false);
 					secondRowSizeField.setDisable(false);
 					secondColSizeField.setDisable(false);
