@@ -305,8 +305,8 @@ public class CalculatorScreen implements Initializable {
 		}
 	}
 
-	public int[][] printHashMap(Map<String, TextField> map, int row, int col) {
-		int[][] dataArray = new int[row][col];
+	public double[][] printHashMap(Map<String, TextField> map, int row, int col) {
+		double[][] dataArray = new double[row][col];
 		System.out.println("Prints Hashmap: ");
 		for (int currentRow = 0; currentRow < row; currentRow++) {
 			for (int currentCol = 0; currentCol < col; currentCol++) {
@@ -326,8 +326,8 @@ public class CalculatorScreen implements Initializable {
 
 	public void matrixOperation(int row1, int col1, int row2, int col2) {
 		// I need to get the data from hashmap
-		int[][] dataOne = printHashMap(mapTextField, row1, col1);
-		int[][] dataTwo = printHashMap(mapTextField2, row2, col2);
+		double[][] dataOne = printHashMap(mapTextField, row1, col1);
+		double[][] dataTwo = printHashMap(mapTextField2, row2, col2);
 
 		Matrix resultMatrix = new Matrix();
 
