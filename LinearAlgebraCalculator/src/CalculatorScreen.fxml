@@ -28,42 +28,37 @@
       </items>
     </ChoiceBox>
     <Label fx:id="operationTypeLabel" layoutX="245.0" layoutY="14.0" prefWidth="324.0" text="Operation Type: (Select to Proceed) " />
-    <Button fx:id="dimension1" layoutX="21.0" layoutY="227.0" mnemonicParsing="false" onAction="#dimension1Action" prefWidth="265.0" text="Dimension 1" />
-    <Button fx:id="dimension2" layoutX="318.0" layoutY="227.0" mnemonicParsing="false" prefWidth="265.0" text="Dimension2" />
-    <ScrollPane fx:id="resultPanel" layoutX="21.0" layoutY="52.0" prefHeight="161.0" prefWidth="561.0">
+    <Button fx:id="dimension1" layoutX="19.0" layoutY="243.0" minHeight="20.0" mnemonicParsing="false" onAction="#dimension1Action" prefHeight="26.0" prefWidth="265.0" text="Dimension 1" />
+    <Button fx:id="dimension2" layoutX="318.0" layoutY="242.0" mnemonicParsing="false" prefWidth="265.0" text="Dimension2" />
+    <ScrollPane fx:id="resultPanel" layoutX="21.0" layoutY="50.0" prefHeight="186.0" prefWidth="561.0">
       <content>
-        <AnchorPane fx:id="resultPane" minHeight="0.0" minWidth="0.0" prefHeight="161.0" prefWidth="545.0">
+        <AnchorPane fx:id="resultPane" minHeight="0.0" minWidth="0.0" prefHeight="165.0" prefWidth="545.0">
           <children>
-            <GridPane fx:id="resultGrid" layoutX="14.0" layoutY="29.0" prefHeight="97.0" prefWidth="517.0">
-              <columnConstraints>
-              </columnConstraints>
-              <rowConstraints>
-              </rowConstraints>
-            </GridPane>
+            <GridPane fx:id="resultGrid" layoutX="-1.0" layoutY="-1.0" prefHeight="165.0" prefWidth="545.0" />
           </children>
         </AnchorPane>
       </content>
     </ScrollPane>
-    <Pane id="firstMatrix" layoutX="21.0" layoutY="270.0" prefHeight="209.0" prefWidth="264.0">
+    <Pane id="firstMatrix" layoutX="21.0" layoutY="270.0" prefHeight="250.0" prefWidth="264.0">
       <children>
-        <ScrollPane id="scrollMatrixOne" layoutX="0.0" layoutY="0.0" prefHeight="231.0" prefWidth="264.0">
+        <ScrollPane id="scrollMatrixOne" layoutX="0.0" layoutY="0.0" prefHeight="249.9998779296875" prefWidth="264.0">
           <content>
-            <AnchorPane id="firstMatrixAnchor" minHeight="0.0" minWidth="0.0" prefHeight="229.0" prefWidth="262.0">
+            <AnchorPane id="firstMatrixAnchor" minHeight="0.0" minWidth="0.0" prefHeight="249.9998779296875" prefWidth="262.0">
               <children>
-                <GridPane fx:id="gridFirstMatrix" layoutX="0.0" layoutY="0.0" prefHeight="229.0" prefWidth="262.0" />
+                <GridPane fx:id="gridFirstMatrix" layoutX="0.0" layoutY="2.0" prefHeight="247.0" prefWidth="248.0" />
               </children>
             </AnchorPane>
           </content>
         </ScrollPane>
       </children>
     </Pane>
-    <Pane id="secondMatrix" layoutX="318.0" layoutY="270.0" prefHeight="209.0" prefWidth="264.0">
+    <Pane id="secondMatrix" layoutX="318.0" layoutY="270.0" prefHeight="250.0" prefWidth="264.0">
       <children>
-        <ScrollPane id="scrollMatrixTwo" layoutX="0.0" layoutY="0.0" prefHeight="231.0" prefWidth="264.0">
+        <ScrollPane id="scrollMatrixTwo" layoutX="0.0" layoutY="0.0" prefHeight="249.9998779296875" prefWidth="264.0">
           <content>
-            <AnchorPane id="secondMatrixAnchor" minHeight="0.0" minWidth="0.0" prefHeight="229.0" prefWidth="262.0">
+            <AnchorPane id="secondMatrixAnchor" minHeight="0.0" minWidth="0.0" prefHeight="249.9998779296875" prefWidth="262.0">
               <children>
-                <GridPane fx:id="gridSecondMatrix" layoutX="0.0" layoutY="2.0" prefHeight="229.0" prefWidth="262.0" />
+                <GridPane fx:id="gridSecondMatrix" layoutX="0.0" layoutY="2.0" prefHeight="247.0" prefWidth="248.0" />
               </children>
             </AnchorPane>
           </content>

@@ -129,8 +129,8 @@ public class CalculatorScreen implements Initializable {
 
 	public void operationHelper(int row1Size, int col1Size, int row2Size, int col2Size, String firstRowSize,
 			String firstColSize, String secondRowSize, String secondColSize) {
-			gridFirstMatrix.getChildren().clear();
-			gridSecondMatrix.getChildren().clear();
+		gridFirstMatrix.getChildren().clear();
+		gridSecondMatrix.getChildren().clear();
 		for (int i = 0; i < row1Size; i++) {
 			for (int j = 0; j < col1Size; j++) {
 				String name = generateMapCellName(i, j);
@@ -168,11 +168,11 @@ public class CalculatorScreen implements Initializable {
 			System.out.println("First Matrix Dimension: " + dimensionLabelOne);
 			System.out.println("Second Matrix Dimension: " + dimensionLabelTwo);
 
-			if (Integer.parseInt(firstRowSize) > 10 || Integer.parseInt(firstColSize) > 10
-					|| Integer.parseInt(secondColSize) > 10 || Integer.parseInt(secondRowSize) > 10) {
+			if (Integer.parseInt(firstRowSize) > 6 || Integer.parseInt(firstColSize) > 6
+					|| Integer.parseInt(secondColSize) > 6 || Integer.parseInt(secondRowSize) > 6) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
-				alert.setHeaderText("Dimensions are larger than 4X4");
+				alert.setHeaderText("Dimensions are larger than 6X6");
 				alert.setContentText("Click on Dimension button to calculate!");
 
 				alert.showAndWait();
@@ -222,22 +222,38 @@ public class CalculatorScreen implements Initializable {
 		mapTextField = new HashMap<>();
 		mapTextField2 = new HashMap<>();
 		resultMap = new HashMap<>();
-		
-		
+		resultGrid.getChildren().clear();
+		gridFirstMatrix.getChildren().clear();
+		gridSecondMatrix.getChildren().clear();
 		int operationIndexSelected = operationChoiceBox.getSelectionModel().getSelectedIndex();
 		String operationSelected = operationChoiceBox.getItems().get(operationIndexSelected);
-		if (operationSelected.equals("Add Matrices") || operationSelected.equals("Subtract Matrices")) {
+		String firstRowSize = firstRowSizeField.getText().trim();
+		String firstColSize = firstColSizeField.getText().trim();
+		String secondRowSize = secondRowSizeField.getText().trim();
+		String secondColSize = secondColSizeField.getText().trim();
 
-			addOperation();
+		if (Integer.parseInt(firstRowSize) < 7 && Integer.parseInt(firstColSize) < 7
+				&& Integer.parseInt(secondRowSize) < 7 && Integer.parseInt(secondColSize) < 7) {
+			if (operationSelected.equals("Add Matrices") || operationSelected.equals("Subtract Matrices")) {
 
-		} else if (operationSelected.equals("Multiply Matrices")) {
-			multiplicationOperation();
+				addOperation();
+
+			} else if (operationSelected.equals("Multiply Matrices")) {
+				multiplicationOperation();
+			} else {
+				System.out.println("User has not selected any operation...");
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText("Must select an operation type to continue!");
+				alert.setContentText("Select operation type in the dropdown.");
+
+				alert.showAndWait();
+			}
 		} else {
-			System.out.println("User has not selected any operation...");
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information Dialog");
-			alert.setHeaderText("Must select an operation type to continue!");
-			alert.setContentText("Select operation type in the dropdown.");
+			alert.setHeaderText("This Matrix Calculator only supports 6X6 Matrix");
+			alert.setContentText("Sorry for the inconvience.");
 
 			alert.showAndWait();
 		}
@@ -275,11 +291,11 @@ public class CalculatorScreen implements Initializable {
 			String dimensionLabelOne = firstRowSize + "X" + firstColSize;
 			String dimensionLabelTwo = secondRowSize + "X" + secondColSize;
 
-			if (Integer.parseInt(firstRowSize) > 10 || Integer.parseInt(firstColSize) > 10
-					|| Integer.parseInt(secondColSize) > 10 || Integer.parseInt(secondRowSize) > 10) {
+			if (Integer.parseInt(firstRowSize) > 7 || Integer.parseInt(firstColSize) > 7
+					|| Integer.parseInt(secondColSize) > 7 || Integer.parseInt(secondRowSize) > 7) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
-				alert.setHeaderText("Dimensions are larger than 10X10");
+				alert.setHeaderText("Dimensions are larger than 6X6");
 				alert.setContentText("Click on Dimension button to calculate!");
 
 				alert.showAndWait();
@@ -369,6 +385,7 @@ public class CalculatorScreen implements Initializable {
 				.equals("Multiply Matrices")) {
 			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+
 		}
 
 	}
@@ -399,6 +416,9 @@ public class CalculatorScreen implements Initializable {
 				mapTextField = new HashMap<>();
 				mapTextField2 = new HashMap<>();
 				resultMap = new HashMap<>();
+				resultGrid.getChildren().clear();
+				gridFirstMatrix.getChildren().clear();
+				gridSecondMatrix.getChildren().clear();
 
 			}
 		});
