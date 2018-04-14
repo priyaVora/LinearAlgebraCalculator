@@ -238,6 +238,15 @@ public class CalculatorScreen implements Initializable {
 		operationHelper(row1Size, col1Size, 0, 0, firstRowSize, firstColSize, "", "");
 	}
 
+	public void tranposeOperation() {
+		String firstRowSize = firstRowSizeField.getText().trim();
+		String firstColSize = firstColSizeField.getText().trim();
+		int row1Size = Integer.parseInt(firstRowSize);
+		int col1Size = Integer.parseInt(firstColSize);
+
+		operationHelper(row1Size, col1Size, 0, 0, firstRowSize, firstColSize, "", "");
+	}
+
 	public void determinantAndInverseOperationSettings() {
 		String firstRowSize = firstRowSizeField.getText().trim();
 		String firstColSize = firstColSizeField.getText().trim();
@@ -280,7 +289,9 @@ public class CalculatorScreen implements Initializable {
 
 				} else if (operationSelected.equals("Multiply Matrices")) {
 					multiplicationOperation();
-				} else if (operationSelected.equals("Determinant") || operationSelected.equals("Inverse Matrix")) {
+				} else if (operationSelected.equals("Determinant") || operationSelected.equals("Inverse Matrix")
+						|| operationSelected.equals("Matrix Row Operation")
+						|| operationSelected.equals("Matrice Transpose")) {
 					dimension2.setDisable(true);
 					gridSecondMatrix.setDisable(true);
 					secondColSizeField.setText("0");
@@ -407,6 +418,12 @@ public class CalculatorScreen implements Initializable {
 			resultMatrix = cal.multipyMatrices(a, b);
 			System.out.println("Row: " + resultMatrix.getRow());
 			System.out.println("Col: " + resultMatrix.getColumn());
+		} else if (operationTypeLabel.getText().equals("Matrice Transpose")) {
+			double[][] dataCurrent = MatrixCalculator.transpose(dataOne);
+			resultMatrix.setCurrentMatrix(dataCurrent);
+			System.out.println("Print out: Tranpose: ");
+
+			resultMatrix.printMatrix();
 		} else if (operationTypeLabel.getText().equals("Determinant")) {
 			dimension2.setDisable(true);
 			gridSecondMatrix.setDisable(true);
@@ -416,6 +433,18 @@ public class CalculatorScreen implements Initializable {
 			secondColSizeField.setDisable(true);
 			determinantValue = cal.determinant(dataOne);
 			System.out.println("Determinant Value: " + determinantValue);
+
+		} else if (operationTypeLabel.getText().equals("Matrix Row Operation")) {
+			dimension2.setDisable(true);
+			gridSecondMatrix.setDisable(true);
+			secondColSizeField.setText("0");
+			secondRowSizeField.setText("0");
+			secondRowSizeField.setDisable(true);
+			secondColSizeField.setDisable(true);
+			double[][] dataArray = cal.rref(dataOne);
+			resultMatrix.setCurrentMatrix(dataArray);
+			System.out.println("Print out: RREF");
+			resultMatrix.printMatrix();
 
 		}
 
@@ -445,7 +474,37 @@ public class CalculatorScreen implements Initializable {
 					System.out.println(resultMap.isEmpty());
 				}
 			}
-		} else {
+		} else if (operationTypeLabel.getText().equals("Matrix Row Operation")) {
+			for (int i = 0; i < resultMatrix.getCurrentMatrix().length; i++) {
+				for (int j = 0; j < resultMatrix.getCurrentMatrix()[0].length; j++) {
+					String name = generateMapCellName(i, j);
+					TextField field = new TextField();
+
+					String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
+					field.setText(positionValue);
+					field.getStyleClass().add("gridResultTextField");
+					resultGrid.add(field, j, i);
+					resultMap.put(name, field);
+					System.out.println(resultMap.isEmpty());
+				}
+			}
+		} else if (operationTypeLabel.getText().equals("Matrice Transpose")) {
+			for (int i = 0; i < resultMatrix.getCurrentMatrix().length; i++) {
+				for (int j = 0; j < resultMatrix.getCurrentMatrix()[0].length; j++) {
+					String name = generateMapCellName(i, j);
+					TextField field = new TextField();
+
+					String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
+					field.setText(positionValue);
+					field.getStyleClass().add("gridResultTextField");
+					resultGrid.add(field, j, i);
+					resultMap.put(name, field);
+					System.out.println(resultMap.isEmpty());
+				}
+			}
+		}
+
+		else {
 			resultMatrix.printMatrix();
 
 			for (int i = 0; i < resultMatrix.getRow(); i++) {
@@ -500,7 +559,11 @@ public class CalculatorScreen implements Initializable {
 			} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 					.equals("Determinant")
 					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-							.equals("Inverse Matrix")) {
+							.equals("Inverse Matrix")
+					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Matrix Row Operation")
+					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Matrice Transpose")) {
 				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
 				dimension2.setDisable(true);
@@ -516,7 +579,9 @@ public class CalculatorScreen implements Initializable {
 			if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 					.equals("Determinant")
 					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-							.equals("Inverse Matrix")) {
+							.equals("Inverse Matrix")
+					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Matrix Row Operation")) {
 				secondRowSizeField.setText("0");
 				secondColSizeField.setText("0");
 			} else {
@@ -550,7 +615,9 @@ public class CalculatorScreen implements Initializable {
 				System.out.println(operationChoiceBox.getItems().get(indexSelected));
 				operationTypeLabel.setText(operationChoiceBox.getItems().get(indexSelected));
 				if (operationChoiceBox.getItems().get(indexSelected).equals("Determinant")
-						|| operationChoiceBox.getItems().get(indexSelected).equals("Inverse Matrix")) {
+						|| operationChoiceBox.getItems().get(indexSelected).equals("Inverse Matrix")
+						|| operationChoiceBox.getItems().get(indexSelected).equals("Matrix Row Operation")
+						|| operationChoiceBox.getItems().get(indexSelected).equals("Matrice Transpose")) {
 					dimension2.setDisable(true);
 					gridSecondMatrix.setDisable(true);
 					secondColSizeField.setText("0");
