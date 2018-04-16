@@ -29,6 +29,7 @@ import model.Matrix;
 
 public class CalculatorScreen implements Initializable {
 	MatrixCalculator cal = new MatrixCalculator();
+
 	Map<String, TextField> mapTextField;
 	Map<String, TextField> mapTextField2;
 	Map<String, TextField> resultMap;
@@ -640,6 +641,68 @@ public class CalculatorScreen implements Initializable {
 				resultGrid.getChildren().clear();
 				gridFirstMatrix.getChildren().clear();
 				gridSecondMatrix.getChildren().clear();
+
+			}
+		});
+
+		showWorkButton.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				if (operationTypeLabel.getText().trim().equals("Operation Type: (Select to Proceed)")) {
+					System.out.println("Please select an operation type..");
+				} else {
+					if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Add Matrices")) {
+						String[][] showWork = cal.getShowWorkAddition();
+						String[][] showAnswer = cal.getAnswerAddition();
+
+						for (int i = 0; i < showWork.length; i++) {
+							for (int j = 0; j < showWork[i].length; j++) {
+								System.out.print(showWork[i][j] + " ");
+							}
+							System.out.println(" ");
+						}
+						System.out.println(" ");
+						for (int i = 0; i < showAnswer.length; i++) {
+							for (int j = 0; j < showAnswer[i].length; j++) {
+								System.out.print(showAnswer[i][j] + " ");
+							}
+							System.out.println(" ");
+						}
+					} else if (operationChoiceBox.getItems()
+							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Subtract Matrices")) {
+						String[][] showWork = cal.getShowWorkSubtraction();
+						String[][] showAnswer = cal.getAnswerSubtraction();
+
+						for (int i = 0; i < showWork.length; i++) {
+							for (int j = 0; j < showWork[i].length; j++) {
+								System.out.print(showWork[i][j] + " ");
+							}
+							System.out.println(" ");
+						}
+						System.out.println(" ");
+						for (int i = 0; i < showAnswer.length; i++) {
+							for (int j = 0; j < showAnswer[i].length; j++) {
+								System.out.print(showAnswer[i][j] + " ");
+							}
+							System.out.println(" ");
+						}
+
+					} else if (operationChoiceBox.getItems()
+							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Multiply Matrices")) {
+						String[][] showWork = cal.getShowWorkMultiplication();
+
+						for (int i = 0; i < showWork.length; i++) {
+							for (int j = 0; j < showWork[i].length; j++) {
+								System.out.print(showWork[i][j] + " ");
+							}
+							System.out.println(" ");
+						}
+
+					}
+
+				}
 
 			}
 		});
