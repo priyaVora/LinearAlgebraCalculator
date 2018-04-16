@@ -32,6 +32,15 @@
 #gridFirstMatrix { 
 	-fx-background-color: black;
 }
+
+
+#gridOne { 
+	-fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+
+#gridPaneTwo { 
+	-fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
 .gridSecondMatrix { 
 	-fx-background-color: black;
 }

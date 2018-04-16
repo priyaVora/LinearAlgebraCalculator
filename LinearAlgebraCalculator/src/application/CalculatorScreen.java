@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -12,8 +13,10 @@ import control.MatrixCalculator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -24,7 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import javafx.scene.layout.Pane;
-
+import javafx.stage.Stage;
 import model.Matrix;
 
 public class CalculatorScreen implements Initializable {
@@ -647,6 +650,22 @@ public class CalculatorScreen implements Initializable {
 
 		showWorkButton.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
+
+				Parent root;
+				try {
+					root = FXMLLoader.load(getClass().getResource("/ShowWorkScreen.fxml"));
+
+					Stage stage = new Stage();
+					stage.setTitle("Show Work");
+					Scene scene = new Scene(root);
+					scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
+					stage.setScene(scene);
+					stage.show();
+					// Hide this current window (if this is what you want)
+					// ((Node)(event.getSource())).getScene().getWindow().hide();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				if (operationTypeLabel.getText().trim().equals("Operation Type: (Select to Proceed)")) {
 					System.out.println("Please select an operation type..");
 				} else {
