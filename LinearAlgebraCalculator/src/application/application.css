@@ -35,11 +35,15 @@
 
 
 #gridOne { 
-	-fx-background-color: linear-gradient(#2A5058, #61a2b1);
+	-fx-background-color: black;
+		-fx-border-color: yellow;
 }
-
+#vbox { 
+	-fx-background-color: red;
+}
 #gridPaneTwo { 
-	-fx-background-color: linear-gradient(#2A5058, #61a2b1);
+	-fx-background-color: black;
+		-fx-border-color: yellow;
 }
 .gridSecondMatrix { 
 	-fx-background-color: black;

@@ -27,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Matrix;
 
@@ -48,6 +49,7 @@ public class CalculatorScreen implements Initializable {
 	private GridPane gridFirstMatrix;
 	@FXML
 	private GridPane gridSecondMatrix;
+
 	@FXML
 	private GridPane resultGrid;
 	@FXML
@@ -606,6 +608,38 @@ public class CalculatorScreen implements Initializable {
 
 	}
 
+	public void load(int row, int col, int row2, int col2) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowWorkScreen.fxml"));
+
+		Parent root;
+		try {
+			root = loader.load();
+			ShowScreenController controller = loader.getController();
+			controller.resetControls(row, col, row2, col2);
+
+			if (operationTypeLabel.getText().trim().equals("Add Matrices")) {
+				controller.setAnswer(cal.getAnswerAddition());
+				controller.setShowWork(cal.getShowWorkAddition());
+			} else if (operationTypeLabel.getText().trim().equals("Subtract Matrices")) {
+				controller.setAnswer(cal.getAnswerSubtraction());
+				controller.setShowWork(cal.getShowWorkSubtraction());
+			}
+
+			controller.setFirstGrid();
+			// call method from controller to set Data
+			Stage stage = new Stage();
+			stage.setTitle("Show Work");
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+			scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
+			// Hide this current window (if this is what you want)
+			// // ((Node)(event.getSource())).getScene().getWindow().hide();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		dimension1.setDisable(true);
@@ -651,21 +685,6 @@ public class CalculatorScreen implements Initializable {
 		showWorkButton.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 
-				Parent root;
-				try {
-					root = FXMLLoader.load(getClass().getResource("/ShowWorkScreen.fxml"));
-
-					Stage stage = new Stage();
-					stage.setTitle("Show Work");
-					Scene scene = new Scene(root);
-					scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
-					stage.setScene(scene);
-					stage.show();
-					// Hide this current window (if this is what you want)
-					// ((Node)(event.getSource())).getScene().getWindow().hide();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
 				if (operationTypeLabel.getText().trim().equals("Operation Type: (Select to Proceed)")) {
 					System.out.println("Please select an operation type..");
 				} else {
@@ -687,6 +706,9 @@ public class CalculatorScreen implements Initializable {
 							}
 							System.out.println(" ");
 						}
+
+						load(showWork.length, showWork[0].length, showAnswer.length, showAnswer[0].length);
+
 					} else if (operationChoiceBox.getItems()
 							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 							.equals("Subtract Matrices")) {
@@ -707,6 +729,7 @@ public class CalculatorScreen implements Initializable {
 							System.out.println(" ");
 						}
 
+						load(showWork.length, showWork[0].length, showAnswer.length, showAnswer[0].length);
 					} else if (operationChoiceBox.getItems()
 							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 							.equals("Multiply Matrices")) {
@@ -725,6 +748,7 @@ public class CalculatorScreen implements Initializable {
 
 			}
 		});
+
 	}
 
 }
