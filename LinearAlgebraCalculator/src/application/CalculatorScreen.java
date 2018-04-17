@@ -623,6 +623,9 @@ public class CalculatorScreen implements Initializable {
 			} else if (operationTypeLabel.getText().trim().equals("Subtract Matrices")) {
 				controller.setAnswer(cal.getAnswerSubtraction());
 				controller.setShowWork(cal.getShowWorkSubtraction());
+			} else if (operationTypeLabel.getText().trim().equals("Multiply Matrices")) {
+				controller.setAnswer(cal.getAnswerMultiplication());
+				controller.setShowWork(cal.getShowWorkMultiplication());
 			}
 
 			controller.setFirstGrid();
@@ -734,6 +737,7 @@ public class CalculatorScreen implements Initializable {
 							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 							.equals("Multiply Matrices")) {
 						String[][] showWork = cal.getShowWorkMultiplication();
+						String[][] showAnswer = cal.getAnswerMultiplication();
 
 						for (int i = 0; i < showWork.length; i++) {
 							for (int j = 0; j < showWork[i].length; j++) {
@@ -741,6 +745,7 @@ public class CalculatorScreen implements Initializable {
 							}
 							System.out.println(" ");
 						}
+						load(showWork.length, showWork[0].length, showAnswer.length, showAnswer[0].length);
 
 					}
 
