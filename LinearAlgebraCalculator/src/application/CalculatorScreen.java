@@ -32,6 +32,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Matrix;
 import model.Vector;
+import model.VectorOrientation;
 
 public class CalculatorScreen implements Initializable {
 	MatrixCalculator cal = new MatrixCalculator();
@@ -337,8 +338,8 @@ public class CalculatorScreen implements Initializable {
 					multiplicationOperation();
 				} else if (operationSelected.equals("Determinant") || operationSelected.equals("Inverse Matrix")
 						|| operationSelected.equals("Matrix Row Operation")
-						|| operationSelected.equals("Matrice Transpose")
-						|| operationSelected.equals("Vector Magnitude")) {
+						|| operationSelected.equals("Matrice Transpose") || operationSelected.equals("Vector Magnitude")
+						|| operationSelected.equals("Vector Unit Vector")) {
 					dimension2.setDisable(true);
 					gridSecondMatrix.setDisable(true);
 					secondColSizeField.setText("0");
@@ -446,6 +447,7 @@ public class CalculatorScreen implements Initializable {
 		double determinantValue = Integer.MAX_VALUE;
 		double dotProduct = Integer.MAX_VALUE;
 		double magnitude = Integer.MAX_VALUE;
+		Vector unitVector = new Vector();
 		Matrix resultMatrix = new Matrix();
 
 		Matrix a = new Matrix("FirstMatrix", row1, col1);
@@ -508,6 +510,10 @@ public class CalculatorScreen implements Initializable {
 			currentVector.setCurrentVector(dataOne);
 			magnitude = vcal.magnitude(currentVector);
 			System.out.println("Magnitude: " + magnitude);
+		} else if (operationTypeLabel.getText().trim().equals("Vector Unit Vector")) {
+			Vector currentVector = new Vector("A", row1, col1, VectorOrientation.VERTICAL);
+			currentVector.setCurrentVector(dataOne);
+			unitVector = vcal.unitVector(currentVector);
 		}
 
 		if (operationTypeLabel.getText().equals("Determinant")) {
@@ -590,6 +596,19 @@ public class CalculatorScreen implements Initializable {
 				}
 			}
 
+		} else if (operationTypeLabel.getText().equals("Vector Unit Vector")) {
+			for (int i = 0; i < unitVector.getCurrentVector().length; i++) {
+				for (int j = 0; j < unitVector.getCurrentVector()[i].length; j++) {
+					String name = generateMapCellName(i, j);
+					TextField field = new TextField();
+					field.setText("" + unitVector.getCurrentVector()[i][j]);
+					field.getStyleClass().add("gridResultTextField");
+					resultGrid.add(field, j, i);
+					resultMap.put(name, field);
+					System.out.println(resultMap.isEmpty());
+				}
+			}
+
 		}
 
 		else {
@@ -650,6 +669,12 @@ public class CalculatorScreen implements Initializable {
 				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
 			} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+					.equals("Vector Unit Vector")) {
+				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+			}
+
+			else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 					.equals("Multiply Matrices")) {
 				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
@@ -680,7 +705,9 @@ public class CalculatorScreen implements Initializable {
 					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 							.equals("Matrix Row Operation")
 					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-							.equals("Vector Magnitude")) {
+							.equals("Vector Magnitude")
+					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Vector Unit Vector")) {
 				secondRowSizeField.setText("0");
 				secondColSizeField.setText("0");
 			} else {
@@ -752,7 +779,8 @@ public class CalculatorScreen implements Initializable {
 						|| operationChoiceBox.getItems().get(indexSelected).equals("Inverse Matrix")
 						|| operationChoiceBox.getItems().get(indexSelected).equals("Matrix Row Operation")
 						|| operationChoiceBox.getItems().get(indexSelected).equals("Matrice Transpose")
-						|| operationChoiceBox.getItems().get(indexSelected).equals("Vector Magnitude")) {
+						|| operationChoiceBox.getItems().get(indexSelected).equals("Vector Magnitude")
+						|| operationChoiceBox.getItems().get(indexSelected).equals("Vector Unit Vector")) {
 					dimension2.setDisable(true);
 					gridSecondMatrix.setDisable(true);
 					secondColSizeField.setText("0");
