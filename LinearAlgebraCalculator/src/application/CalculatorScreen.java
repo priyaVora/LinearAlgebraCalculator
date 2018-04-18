@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import control.MatrixCalculator;
+import control.VectorCalculator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,7 +34,7 @@ import model.Matrix;
 
 public class CalculatorScreen implements Initializable {
 	MatrixCalculator cal = new MatrixCalculator();
-
+	VectorCalculator vcal = new VectorCalculator();
 	Map<String, TextField> mapTextField;
 	Map<String, TextField> mapTextField2;
 	Map<String, TextField> resultMap;
@@ -441,6 +442,7 @@ public class CalculatorScreen implements Initializable {
 		double[][] dataOne = printHashMap(mapTextField, row1, col1);
 		double[][] dataTwo = printHashMap(mapTextField2, row2, col2);
 		double determinantValue = Integer.MAX_VALUE;
+		double dotProduct = Integer.MAX_VALUE;
 		Matrix resultMatrix = new Matrix();
 
 		Matrix a = new Matrix("FirstMatrix", row1, col1);
@@ -490,8 +492,14 @@ public class CalculatorScreen implements Initializable {
 			System.out.println("Print out: RREF");
 			resultMatrix.printMatrix();
 
-		} else if(operationTypeLabel.getText().equals("Vector Dot Product"))  { 
-			
+		} else if (operationTypeLabel.getText().equals("Vector Dot Product")) {
+			int sizeA = dataOne.length * dataOne[0].length;
+			int sizeB = dataTwo.length * dataTwo[0].length;
+			double[] A = vcal.grabDataArray(sizeA, dataOne);
+			double[] B = vcal.grabDataArray(sizeB, dataTwo);
+
+			dotProduct = vcal.dotProduct(A, B);
+			System.out.println(dotProduct);
 		}
 
 		if (operationTypeLabel.getText().equals("Determinant")) {
@@ -548,12 +556,12 @@ public class CalculatorScreen implements Initializable {
 					System.out.println(resultMap.isEmpty());
 				}
 			}
-		} else if(operationTypeLabel.getText().equals("Vector Dot Product")) { 
+		} else if (operationTypeLabel.getText().equals("Vector Dot Product")) {
 			for (int i = 0; i < 1; i++) {
 				for (int j = 0; j < 1; j++) {
 					String name = generateMapCellName(i, j);
 					TextField field = new TextField();
-					field.setText("Dot Product: " + determinantValue);
+					field.setText("Dot Product: " + dotProduct);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
