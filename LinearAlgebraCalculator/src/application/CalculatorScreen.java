@@ -148,6 +148,42 @@ public class CalculatorScreen implements Initializable {
 		}
 	}
 
+	public void dotProductOperation() {
+		String firstRowSize = firstRowSizeField.getText().trim();
+		String firstColSize = firstColSizeField.getText().trim();
+		int row1Size = Integer.parseInt(firstRowSize);
+		int col1Size = Integer.parseInt(firstColSize);
+
+		String secondRowSize = secondRowSizeField.getText().trim();
+		String secondColSize = secondColSizeField.getText().trim();
+
+		int row2Size = Integer.parseInt(secondRowSize);
+		int col2Size = Integer.parseInt(secondColSize);
+
+		// set it to be vertical
+		if (col1Size == 1 && col2Size == 1) {
+			if (row1Size == row2Size && col1Size == col2Size) {
+				operationHelper(row1Size, col1Size, row2Size, col2Size, firstRowSize, firstColSize, secondRowSize,
+						secondColSize);
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText("Dimensions must be the same for both matrices!");
+				alert.setContentText("Please Reset!");
+
+				alert.showAndWait();
+			}
+		} else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText("For Vertical Vectors : Column size must be one");
+			alert.setContentText("Please Reset!");
+
+			alert.showAndWait();
+
+		}
+	}
+
 	public void operationHelper(int row1Size, int col1Size, int row2Size, int col2Size, String firstRowSize,
 			String firstColSize, String secondRowSize, String secondColSize) {
 		gridFirstMatrix.getChildren().clear();
@@ -293,6 +329,8 @@ public class CalculatorScreen implements Initializable {
 
 					addOperation();
 
+				} else if (operationSelected.equals("Vector Dot Product")) {
+					dotProductOperation();
 				} else if (operationSelected.equals("Multiply Matrices")) {
 					multiplicationOperation();
 				} else if (operationSelected.equals("Determinant") || operationSelected.equals("Inverse Matrix")
@@ -452,6 +490,8 @@ public class CalculatorScreen implements Initializable {
 			System.out.println("Print out: RREF");
 			resultMatrix.printMatrix();
 
+		} else if(operationTypeLabel.getText().equals("Vector Dot Product"))  { 
+			
 		}
 
 		if (operationTypeLabel.getText().equals("Determinant")) {
@@ -508,9 +548,19 @@ public class CalculatorScreen implements Initializable {
 					System.out.println(resultMap.isEmpty());
 				}
 			}
-		}
-
-		else {
+		} else if(operationTypeLabel.getText().equals("Vector Dot Product")) { 
+			for (int i = 0; i < 1; i++) {
+				for (int j = 0; j < 1; j++) {
+					String name = generateMapCellName(i, j);
+					TextField field = new TextField();
+					field.setText("Dot Product: " + determinantValue);
+					field.getStyleClass().add("gridResultTextField");
+					resultGrid.add(field, j, i);
+					resultMap.put(name, field);
+					System.out.println(resultMap.isEmpty());
+				}
+			}
+		} else {
 			resultMatrix.printMatrix();
 
 			for (int i = 0; i < resultMatrix.getRow(); i++) {
@@ -555,6 +605,11 @@ public class CalculatorScreen implements Initializable {
 
 			} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 					.equals("Subtract Matrices")) {
+				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+
+			} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+					.equals("Vector Dot Product")) {
 				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
 

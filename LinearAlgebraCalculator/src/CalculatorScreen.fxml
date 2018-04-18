@@ -28,6 +28,8 @@
           <String fx:value="Matrice Transpose" />
           <String fx:value="Inverse Matrix" />
           <String fx:value="Determinant" />
+          <String fx:value="Vector Dot Product" />
+          <String fx:value="Vector Cross Product" />
         </FXCollections>
       </items>
     </ChoiceBox>
