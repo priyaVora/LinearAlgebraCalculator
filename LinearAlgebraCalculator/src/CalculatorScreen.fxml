@@ -30,6 +30,8 @@
           <String fx:value="Determinant" />
           <String fx:value="Vector Dot Product" />
           <String fx:value="Vector Cross Product" />
+          <String fx:value="Vector Magnitude" />
+          <String fx:value="Vector Unit Vector" />
         </FXCollections>
       </items>
     </ChoiceBox>
