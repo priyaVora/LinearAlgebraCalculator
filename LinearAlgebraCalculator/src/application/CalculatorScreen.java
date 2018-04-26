@@ -827,7 +827,7 @@ public class CalculatorScreen implements Initializable {
 						|| operationChoiceBox.getItems().get(indexSelected).equals("Vector Magnitude")
 						|| operationChoiceBox.getItems().get(indexSelected).equals("Vector Unit Vector")) {
 
-					if (operationChoiceBox.getItems().get(indexSelected).equals("Inverse Matrix")) {
+					if (operationChoiceBox.getItems().get(indexSelected).equals("Matrice Transpose")) {
 						showWorkButton.setVisible(false);
 					}
 					dimension2.setDisable(true);
