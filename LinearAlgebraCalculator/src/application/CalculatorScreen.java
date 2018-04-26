@@ -445,6 +445,7 @@ public class CalculatorScreen implements Initializable {
 				} else {
 					System.out.println("The value is not a fraction");
 					System.out.println("VALUE: " + map.get(getValueFrom).getText());
+					System.out.println("????????????????????????????? ; " + map.get(getValueFrom).getText().trim());
 					dataArray[currentRow][currentCol] = Double.parseDouble(map.get(getValueFrom).getText().trim());
 				}
 
@@ -470,7 +471,7 @@ public class CalculatorScreen implements Initializable {
 		b.setCurrentMatrix(dataTwo);
 
 		if (operationTypeLabel.getText().trim().equals("Inverse Matrix")) {
-			double[][] dataCurrent = MatrixCalculator.inverse(dataOne);
+			double[][] dataCurrent = cal.inverse(dataOne);
 			resultMatrix.setCurrentMatrix(dataCurrent);
 			System.out.println("Print out: Inverse: ");
 
@@ -555,13 +556,28 @@ public class CalculatorScreen implements Initializable {
 					String name = generateMapCellName(i, j);
 					TextField field = new TextField();
 
-					String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
-					field.setText(positionValue);
-					field.setPrefWidth(field.getText().length() * 14);
-					field.getStyleClass().add("gridResultTextField");
-					resultGrid.add(field, j, i);
-					resultMap.put(name, field);
-					System.out.println(resultMap.isEmpty());
+					double value = resultMatrix.getCurrentMatrix()[i][j];
+					String valueString = value + "";
+					double check = 1.0 / 0;
+					if (!valueString.contains("NaN")) {
+						System.out.println(resultMatrix.getCurrentMatrix()[i][j]);
+						String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
+						field.setText(positionValue);
+						field.setPrefWidth(field.getText().length() * 14);
+						field.getStyleClass().add("gridResultTextField");
+						resultGrid.add(field, j, i);
+						resultMap.put(name, field);
+						System.out.println(resultMap.isEmpty());
+					} else {
+						String positionValue = resultMatrix.getCurrentMatrix()[i][j] + "";
+						field.setText("n/a");
+						field.setPrefWidth(field.getText().length() * 20);
+						field.getStyleClass().add("gridResultTextField");
+						resultGrid.add(field, j, i);
+						resultMap.put(name, field);
+						System.out.println(resultMap.isEmpty());
+					}
+
 				}
 			}
 		} else if (operationTypeLabel.getText().equals("Matrix Row Operation")) {
