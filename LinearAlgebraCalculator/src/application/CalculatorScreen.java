@@ -784,11 +784,17 @@ public class CalculatorScreen implements Initializable {
 				newPlaceHolder[0][0] = vcal.getDotProductShowWork();
 				newPlaceHolder[1][0] = vcal.getDotProductAnswer();
 				newPlaceHolder[2][0] = vcal.getDotProduct();
-				System.out.println("Before: " + vcal.getDotProductShowWork());
-				System.out.println("PROPSF: " + vcal.getDotProductAnswer());
 
-				// controller.setAnswer(newPlaceHolder2);
 				controller.setShowWork(newPlaceHolder);
+			} else if (operationTypeLabel.getText().trim().equals("Vector Magnitude")) {
+				String[][] values = new String[4][4];
+				values[0][0] = vcal.getOriginalWorkMagnitude();
+				values[1][0] = vcal.getSquaredWorkMagnitude();
+				values[2][0] = vcal.getCurrentSquareRootValue();
+				String value = vcal.getCurrentSquareRootValue().trim();
+				values[3][0] = "" + Math.sqrt(Double.parseDouble(value.substring(3, value.length())));
+
+				controller.setShowWork(values);
 			}
 
 			controller.setFirstGrid();
@@ -923,6 +929,10 @@ public class CalculatorScreen implements Initializable {
 							.equals("Vector Dot Product")) {
 						System.out.println("Vector Dot Product Work: " + vcal.getDotProductShowWork());
 						load(3, 1, 3, 1);
+					} else if (operationChoiceBox.getItems()
+							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Vector Magnitude")) {
+						load(4, 1, 4, 1);
 					}
 
 				}

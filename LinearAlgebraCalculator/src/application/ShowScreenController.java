@@ -63,24 +63,35 @@ public class ShowScreenController implements Initializable {
 	}
 
 	public void setFirstGrid() {
-		gridOne.getChildren().clear();
-		for (int i = 0; i < showWorkRow; i++) {
-			for (int j = 0; j < showWorkCol; j++) {
-				TextField field = new TextField();
-				field.setText(showWork[i][j]);
+		if (showWork != null) {
+			gridOne.getChildren().clear();
+			for (int i = 0; i < showWorkRow; i++) {
+				for (int j = 0; j < showWorkCol; j++) {
+					TextField field = new TextField();
+					field.setText(showWork[i][j]);
+					field.setPrefWidth(field.getText().length() * 14);
 
-				field.getStyleClass().add("gridTextField2");
-				gridOne.add(field, j, i);
+					field.getStyleClass().add("gridTextField2");
+					gridOne.add(field, j, i);
+				}
 			}
 		}
 
 		for (int i = 0; i < showAnswerRow; i++) {
 			for (int j = 0; j < showAnswerCol; j++) {
-				TextField field = new TextField();
-				field.setText(answer[i][j]);
+				if (answer != null) {
+					TextField field = new TextField();
+					System.out.println("Is field null: " + field);
+					System.out.println("Is answer null: " + answer[i][j]);
+					if (answer[i][j] != null) {
+						field.setText(answer[i][j]);
+						field.setPrefWidth(field.getText().length() * 14);
+						field.getStyleClass().add("gridTextField2");
+						gridPaneTwo.add(field, j, i);
+					}
 
-				field.getStyleClass().add("gridTextField2");
-				gridPaneTwo.add(field, j, i);
+				}
+
 			}
 		}
 	}
