@@ -68,6 +68,7 @@ public class ShowScreenController implements Initializable {
 			for (int j = 0; j < showWorkCol; j++) {
 				TextField field = new TextField();
 				field.setText(showWork[i][j]);
+
 				field.getStyleClass().add("gridTextField2");
 				gridOne.add(field, j, i);
 			}
@@ -77,6 +78,7 @@ public class ShowScreenController implements Initializable {
 			for (int j = 0; j < showAnswerCol; j++) {
 				TextField field = new TextField();
 				field.setText(answer[i][j]);
+
 				field.getStyleClass().add("gridTextField2");
 				gridPaneTwo.add(field, j, i);
 			}

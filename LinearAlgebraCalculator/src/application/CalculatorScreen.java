@@ -117,9 +117,12 @@ public class CalculatorScreen implements Initializable {
 		for (int i = 1;; i++) {
 			double tem = doubleVal / (1D / i);
 			if (Math.abs(tem - Math.round(tem)) < negligibleRatio) {
+
 				val = Math.round(tem) + "/" + i;
+
 				System.out.println(Math.round(tem) + "/" + i);
 				break;
+
 			}
 		}
 		return val;
@@ -324,6 +327,17 @@ public class CalculatorScreen implements Initializable {
 			alert.setContentText(" ");
 
 			alert.showAndWait();
+
+			if (operationSelected.equals("Matrice Transpose")) {
+				dimension2.setDisable(true);
+				gridSecondMatrix.setDisable(true);
+				secondColSizeField.setText("0");
+				secondRowSizeField.setText("0");
+				secondRowSizeField.setDisable(true);
+				secondColSizeField.setDisable(true);
+			}
+
+			System.out.println("IS EMPTY" + firstColSizeField.getLength());
 		} else {
 
 			if (Integer.parseInt(firstRowSize) < 7 && Integer.parseInt(firstColSize) < 7
@@ -473,6 +487,12 @@ public class CalculatorScreen implements Initializable {
 			double[][] dataCurrent = MatrixCalculator.transpose(dataOne);
 			resultMatrix.setCurrentMatrix(dataCurrent);
 			System.out.println("Print out: Tranpose: ");
+			dimension2.setDisable(true);
+			gridSecondMatrix.setDisable(true);
+			secondColSizeField.setText("0");
+			secondRowSizeField.setText("0");
+			secondRowSizeField.setDisable(true);
+			secondColSizeField.setDisable(true);
 
 			resultMatrix.printMatrix();
 		} else if (operationTypeLabel.getText().equals("Determinant")) {
@@ -522,6 +542,7 @@ public class CalculatorScreen implements Initializable {
 					String name = generateMapCellName(i, j);
 					TextField field = new TextField();
 					field.setText("Determinant: " + determinantValue);
+					field.setPrefWidth(field.getText().length() * 14);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -536,6 +557,7 @@ public class CalculatorScreen implements Initializable {
 
 					String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
 					field.setText(positionValue);
+					field.setPrefWidth(field.getText().length() * 14);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -550,6 +572,7 @@ public class CalculatorScreen implements Initializable {
 
 					String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
 					field.setText(positionValue);
+					field.setPrefWidth(field.getText().length() * 14);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -563,7 +586,9 @@ public class CalculatorScreen implements Initializable {
 					TextField field = new TextField();
 
 					String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
+
 					field.setText(positionValue);
+					field.setPrefWidth(field.getText().length() * 14);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -576,6 +601,7 @@ public class CalculatorScreen implements Initializable {
 					String name = generateMapCellName(i, j);
 					TextField field = new TextField();
 					field.setText("Dot Product: " + dotProduct);
+					field.setPrefWidth(field.getText().length() * 14);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -589,6 +615,7 @@ public class CalculatorScreen implements Initializable {
 					String name = generateMapCellName(i, j);
 					TextField field = new TextField();
 					field.setText("Magnitude: " + magnitude);
+					field.setPrefWidth(field.getText().length() * 14);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -602,6 +629,7 @@ public class CalculatorScreen implements Initializable {
 					String name = generateMapCellName(i, j);
 					TextField field = new TextField();
 					field.setText("" + unitVector.getCurrentVector()[i][j]);
+					field.setPrefWidth(field.getText().length() * 14);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -619,6 +647,7 @@ public class CalculatorScreen implements Initializable {
 					String name = generateMapCellName(i, j);
 					TextField field = new TextField();
 					field.setText("" + resultMatrix.getCurrentMatrix()[i][j]);
+					field.setPrefWidth(field.getText().length() * 14);
 					field.getStyleClass().add("gridResultTextField");
 					resultGrid.add(field, j, i);
 					resultMap.put(name, field);
@@ -707,7 +736,9 @@ public class CalculatorScreen implements Initializable {
 					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 							.equals("Vector Magnitude")
 					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-							.equals("Vector Unit Vector")) {
+							.equals("Vector Unit Vector")
+					|| operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Matrice Transpose")) {
 				secondRowSizeField.setText("0");
 				secondColSizeField.setText("0");
 			} else {
@@ -746,6 +777,18 @@ public class CalculatorScreen implements Initializable {
 			} else if (operationTypeLabel.getText().trim().equals("Multiply Matrices")) {
 				controller.setAnswer(cal.getAnswerMultiplication());
 				controller.setShowWork(cal.getShowWorkMultiplication());
+			} else if (operationTypeLabel.getText().trim().equals("Vector Dot Product")) {
+				String[][] newPlaceHolder = new String[3][3];
+				String[][] newPlaceHolder2 = new String[1][1];
+
+				newPlaceHolder[0][0] = vcal.getDotProductShowWork();
+				newPlaceHolder[1][0] = vcal.getDotProductAnswer();
+				newPlaceHolder[2][0] = vcal.getDotProduct();
+				System.out.println("Before: " + vcal.getDotProductShowWork());
+				System.out.println("PROPSF: " + vcal.getDotProductAnswer());
+
+				// controller.setAnswer(newPlaceHolder2);
+				controller.setShowWork(newPlaceHolder);
 			}
 
 			controller.setFirstGrid();
@@ -771,7 +814,9 @@ public class CalculatorScreen implements Initializable {
 		calculateButton.setDisable(true);
 
 		operationChoiceBox.setOnAction(new EventHandler<ActionEvent>() {
+
 			public void handle(ActionEvent e) {
+				showWorkButton.setVisible(true);
 				Integer indexSelected = operationChoiceBox.getSelectionModel().getSelectedIndex();
 				System.out.println(operationChoiceBox.getItems().get(indexSelected));
 				operationTypeLabel.setText(operationChoiceBox.getItems().get(indexSelected));
@@ -781,6 +826,10 @@ public class CalculatorScreen implements Initializable {
 						|| operationChoiceBox.getItems().get(indexSelected).equals("Matrice Transpose")
 						|| operationChoiceBox.getItems().get(indexSelected).equals("Vector Magnitude")
 						|| operationChoiceBox.getItems().get(indexSelected).equals("Vector Unit Vector")) {
+
+					if (operationChoiceBox.getItems().get(indexSelected).equals("Inverse Matrix")) {
+						showWorkButton.setVisible(false);
+					}
 					dimension2.setDisable(true);
 					gridSecondMatrix.setDisable(true);
 					secondColSizeField.setText("0");
@@ -869,6 +918,11 @@ public class CalculatorScreen implements Initializable {
 						}
 						load(showWork.length, showWork[0].length, showAnswer.length, showAnswer[0].length);
 
+					} else if (operationChoiceBox.getItems()
+							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Vector Dot Product")) {
+						System.out.println("Vector Dot Product Work: " + vcal.getDotProductShowWork());
+						load(3, 1, 3, 1);
 					}
 
 				}

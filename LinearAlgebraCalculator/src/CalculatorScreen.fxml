@@ -32,6 +32,9 @@
           <String fx:value="Vector Cross Product" />
           <String fx:value="Vector Magnitude" />
           <String fx:value="Vector Unit Vector" />
+              <String fx:value="Rotation by X-Axis" />
+              <String fx:value="Rotation by Y-Axis" />
+              <String fx:value="Rotation by Z-Axis" />
         </FXCollections>
       </items>
     </ChoiceBox>
