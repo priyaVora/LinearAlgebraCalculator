@@ -458,8 +458,7 @@ public class CalculatorScreen implements Initializable {
 		return dataArray;
 	}
 
-	public void matrixOperation(int row1, int col1, int row2, int col2)
-			throws FileNotFoundException, UnsupportedEncodingException {
+	public void matrixOperation(int row1, int col1, int row2, int col2) throws IOException {
 		// I need to get the data from hashmap
 		double[][] dataOne = printHashMap(mapTextField, row1, col1);
 		double[][] dataTwo = printHashMap(mapTextField2, row2, col2);
@@ -476,10 +475,13 @@ public class CalculatorScreen implements Initializable {
 
 		if (operationTypeLabel.getText().trim().equals("Inverse Matrix")) {
 			double[][] dataCurrent = cal.inverse(dataOne);
-			resultMatrix.setCurrentMatrix(dataCurrent);
-			System.out.println("Print out: Inverse: ");
-
-			resultMatrix.printMatrix();
+			if (dataCurrent != null) {
+				resultMatrix.setCurrentMatrix(dataCurrent);
+				System.out.println("Print out: Inverse: ");
+				resultMatrix.printMatrix();
+			} else {
+				resultMatrix = null;
+			}
 		} else if (operationTypeLabel.getText().equals("Add Matrices")) {
 			resultMatrix = cal.addMatrices(a, b);
 		} else if (operationTypeLabel.getText().equals("Subtract Matrices")) {
@@ -555,36 +557,46 @@ public class CalculatorScreen implements Initializable {
 				}
 			}
 		} else if (operationTypeLabel.getText().equals("Inverse Matrix")) {
-			for (int i = 0; i < resultMatrix.getCurrentMatrix().length; i++) {
-				for (int j = 0; j < resultMatrix.getCurrentMatrix()[0].length; j++) {
-					String name = generateMapCellName(i, j);
-					TextField field = new TextField();
+			if (resultMatrix != null) {
+				for (int i = 0; i < resultMatrix.getCurrentMatrix().length; i++) {
+					for (int j = 0; j < resultMatrix.getCurrentMatrix()[0].length; j++) {
+						String name = generateMapCellName(i, j);
+						TextField field = new TextField();
 
-					double value = resultMatrix.getCurrentMatrix()[i][j];
-					String valueString = value + "";
-					double check = 1.0 / 0;
-					if (!valueString.contains("NaN")) {
-						System.out.println("Value does not contain NaN");
-						System.out.println(resultMatrix.getCurrentMatrix()[i][j]);
-						String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
-						field.setText(positionValue);
-						field.setPrefWidth(field.getText().length() * 14);
-						field.getStyleClass().add("gridResultTextField");
-						resultGrid.add(field, j, i);
-						resultMap.put(name, field);
-						System.out.println(resultMap.isEmpty());
-					} else {
-						String positionValue = resultMatrix.getCurrentMatrix()[i][j] + "";
-						field.setText("n/a");
-						field.setPrefWidth(field.getText().length() * 20);
-						field.getStyleClass().add("gridResultTextField");
-						resultGrid.add(field, j, i);
-						resultMap.put(name, field);
-						System.out.println(resultMap.isEmpty());
+						double value = resultMatrix.getCurrentMatrix()[i][j];
+						String valueString = value + "";
+						double check = 1.0 / 0;
+						if (!valueString.contains("NaN")) {
+							System.out.println("Value does not contain NaN");
+							System.out.println(resultMatrix.getCurrentMatrix()[i][j]);
+							String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
+							field.setText(positionValue);
+							field.setPrefWidth(field.getText().length() * 14);
+							field.getStyleClass().add("gridResultTextField");
+							resultGrid.add(field, j, i);
+							resultMap.put(name, field);
+							System.out.println(resultMap.isEmpty());
+						} else {
+							String positionValue = resultMatrix.getCurrentMatrix()[i][j] + "";
+							field.setText("n/a");
+							field.setPrefWidth(field.getText().length() * 20);
+							field.getStyleClass().add("gridResultTextField");
+							resultGrid.add(field, j, i);
+							resultMap.put(name, field);
+							System.out.println(resultMap.isEmpty());
+						}
+
 					}
-
 				}
+			} else {
+				String name = generateMapCellName(0, 0);
+				TextField field = new TextField();
+				field.setText("Inverse doesnt not exist.");
+				field.setPrefWidth(field.getText().length() * 14);
+				field.getStyleClass().add("gridResultTextField");
+				resultGrid.add(field, 0, 0);
 			}
+
 		} else if (operationTypeLabel.getText().equals("Matrix Row Operation")) {
 			for (int i = 0; i < resultMatrix.getCurrentMatrix().length; i++) {
 				for (int j = 0; j < resultMatrix.getCurrentMatrix()[0].length; j++) {
@@ -679,8 +691,7 @@ public class CalculatorScreen implements Initializable {
 	}
 
 	@FXML
-	private void calculateButtonAction(ActionEvent event)
-			throws NumberFormatException, FileNotFoundException, UnsupportedEncodingException {
+	private void calculateButtonAction(ActionEvent event) throws NumberFormatException, IOException {
 
 		if (firstRowSizeField.getText().trim().isEmpty() || firstColSizeField.getText().trim().isEmpty()
 				|| secondRowSizeField.getText().trim().isEmpty() || secondColSizeField.getText().trim().isEmpty()) {
@@ -970,6 +981,15 @@ public class CalculatorScreen implements Initializable {
 						try {
 							Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
 									+ "\\MatrixShowWork" + "\\Determinant.txt"));
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					} else if (operationChoiceBox.getItems()
+							.get(operationChoiceBox.getSelectionModel().getSelectedIndex()).equals("Inverse Matrix")) {
+						try {
+							Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
+									+ "\\MatrixShowWork" + "\\+InverseMatrix.txt"));
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
