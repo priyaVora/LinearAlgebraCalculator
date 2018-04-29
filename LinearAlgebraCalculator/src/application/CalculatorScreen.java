@@ -965,6 +965,15 @@ public class CalculatorScreen implements Initializable {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
+					} else if (operationChoiceBox.getItems()
+							.get(operationChoiceBox.getSelectionModel().getSelectedIndex()).equals("Determinant")) {
+						try {
+							Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
+									+ "\\MatrixShowWork" + "\\Determinant.txt"));
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 
 				}
