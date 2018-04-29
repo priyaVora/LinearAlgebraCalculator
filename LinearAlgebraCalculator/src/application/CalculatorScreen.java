@@ -1,6 +1,9 @@
 package application;
 
+import java.awt.Desktop;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -455,7 +458,8 @@ public class CalculatorScreen implements Initializable {
 		return dataArray;
 	}
 
-	public void matrixOperation(int row1, int col1, int row2, int col2) {
+	public void matrixOperation(int row1, int col1, int row2, int col2)
+			throws FileNotFoundException, UnsupportedEncodingException {
 		// I need to get the data from hashmap
 		double[][] dataOne = printHashMap(mapTextField, row1, col1);
 		double[][] dataTwo = printHashMap(mapTextField2, row2, col2);
@@ -560,6 +564,7 @@ public class CalculatorScreen implements Initializable {
 					String valueString = value + "";
 					double check = 1.0 / 0;
 					if (!valueString.contains("NaN")) {
+						System.out.println("Value does not contain NaN");
 						System.out.println(resultMatrix.getCurrentMatrix()[i][j]);
 						String positionValue = doubleToFraction(resultMatrix.getCurrentMatrix()[i][j]);
 						field.setText(positionValue);
@@ -674,7 +679,8 @@ public class CalculatorScreen implements Initializable {
 	}
 
 	@FXML
-	private void calculateButtonAction(ActionEvent event) {
+	private void calculateButtonAction(ActionEvent event)
+			throws NumberFormatException, FileNotFoundException, UnsupportedEncodingException {
 
 		if (firstRowSizeField.getText().trim().isEmpty() || firstColSizeField.getText().trim().isEmpty()
 				|| secondRowSizeField.getText().trim().isEmpty() || secondColSizeField.getText().trim().isEmpty()) {
@@ -949,6 +955,16 @@ public class CalculatorScreen implements Initializable {
 							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 							.equals("Vector Magnitude")) {
 						load(4, 1, 4, 1);
+					} else if (operationChoiceBox.getItems()
+							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+							.equals("Matrix Row Operation")) {
+						try {
+							Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
+									+ "\\MatrixShowWork" + "\\ShowWork.txt"));
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 
 				}
