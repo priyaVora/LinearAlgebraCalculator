@@ -1,9 +1,14 @@
 package application;
 
+import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import control.EigenCalculator;
+import control.MatrixCalculator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,12 +28,22 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Matrix;
+import model.Vector;
+import model.VectorOrientation;
 
 public class EigenController implements Initializable {
+	double currentLambda = Integer.MAX_VALUE;
+	EigenCalculator eigenCal = new EigenCalculator();
+	MatrixCalculator cal = new MatrixCalculator();
 	@FXML
 	private Button Back;
 	@FXML
 	private ScrollPane scrollMatrixTwo;
+
+	Map<String, TextField> mapTextField;
+	Map<String, TextField> mapTextField2;
+	Map<String, TextField> resultMap;
 
 	@FXML
 	AnchorPane secondMatrixAnchor;
@@ -69,15 +84,19 @@ public class EigenController implements Initializable {
 	@FXML
 	private Pane secondMatrix;
 
+	public EigenController() {
+		resetGridTextFields();// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		scrollMatrixTwo = new ScrollPane();
 		secondMatrixAnchor = new AnchorPane();
 		secondMatrix = new Pane();
 		setButton.setDisable(true);
 		calculateButton.setDisable(true);
 		operationChoiceBox.setOnAction(new EventHandler<ActionEvent>() {
-
 			public void handle(ActionEvent e) {
 
 				showWorkButton.setVisible(true);
@@ -107,13 +126,67 @@ public class EigenController implements Initializable {
 				calculateButton.setDisable(false);
 			}
 		});
+
+		showWorkButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("Show Work!");
+				if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+						.equals("Is EigenValue?")) {
+					try {
+						Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
+								+ "\\MatrixShowWork" + "\\IsEigenValue.txt"));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+	}
+
+	public void resetGridTextFields() {
+		mapTextField = new HashMap<>();
+		mapTextField2 = new HashMap<>();
+		resultMap = new HashMap<>();
+		showWorkButton = new Button();
+
+		operationChoiceBox = new ChoiceBox<String>();
+		operationTypeLabel = new Label();
+		calculateButton = new Button();
+		setButton = new Button();
+		gridFirstMatrix = new GridPane();
+		gridSecondMatrix = new GridPane();
+
+		firstMatrix = new Pane();
+		secondMatrix = new Pane();
+		firstRowSizeField = new TextField();
+		firstColSizeField = new TextField();
+		secondRowSizeField = new TextField();
+		secondColSizeField = new TextField();
+		dimension1 = new Button();
+		dimension2 = new Button();
+
 	}
 
 	@FXML
 	private void calculateButtonAction(ActionEvent event) throws NumberFormatException, IOException {
 		System.out.println("Calculated!");
+		String firstRowSize = firstRowSizeField.getText().trim();
+		String firstColSize = firstColSizeField.getText().trim();
+		String secondRowSize = secondRowSizeField.getText().trim();
+		String secondColSize = secondColSizeField.getText().trim();
 		String lambdaValue = lambdaField.getText().trim();
 		System.out.println("Lambda Value: " + lambdaValue);
+
+		if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+				.equals("Is EigenValue?")) {
+			currentLambda = Double.parseDouble(lambdaValue);
+
+			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+		}
 	}
 
 	@FXML
@@ -135,8 +208,7 @@ public class EigenController implements Initializable {
 
 		operationHelper(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize), Integer.parseInt(secondRowSize),
 				Integer.parseInt(secondColSize), firstRowSize, firstColSize, secondRowSize, secondColSize);
-		//operationHelper(2, 2, 0, 0, firstRowSize, firstColSize, secondRowSize, secondColSize);
-		
+
 		if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 				.equals("Is EigenValue?")) {
 			System.out.println("Print!");
@@ -151,7 +223,6 @@ public class EigenController implements Initializable {
 
 			setButton.setDisable(false);
 			calculateButton.setDisable(false);
-			lambdaField.setPromptText("Enter λ Value Here");
 
 		}
 
@@ -159,6 +230,57 @@ public class EigenController implements Initializable {
 
 	private String generateMapCellName(int row, int col) {
 		return "Cell_" + row + "_" + col;
+	}
+
+	public void matrixOperation(int row1, int col1, int row2, int col2) throws IOException {
+		// I need to get the data from hashmap
+		if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+				.equals("Is EigenValue?")) {
+			double[][] dataOne = printHashMap(mapTextField, row1, col1);
+			// double[][] dataTwo = printHashMap(mapTextField2, row2, col2);
+			// Matrix b = new Matrix("SecondMatrix", row2, col2);
+			// b.setCurrentMatrix(dataTwo);
+
+			Matrix resultMatrix = new Matrix();
+
+			Matrix a = new Matrix("FirstMatrix", row1, col1);
+			a.setCurrentMatrix(dataOne);
+
+			a.printMatrix();
+
+			eigenCal.isEigenValue(a, currentLambda);
+
+		}
+
+	}
+
+	public double[][] printHashMap(Map<String, TextField> map, int row, int col) {
+		double[][] dataArray = new double[row][col];
+		System.out.println("Prints Hashmap: ");
+		for (int currentRow = 0; currentRow < row; currentRow++) {
+			for (int currentCol = 0; currentCol < col; currentCol++) {
+				System.out.print(currentRow);
+				System.out.print(",");
+				System.out.print(currentCol);
+				System.out.print(" ");
+
+				String getValueFrom = "Cell_" + currentRow + "_" + currentCol;
+				if (map.get(getValueFrom).getText().trim().contains("/")) {
+					// System.out.println("The value is a fraction...");
+					// System.out.println("VALUE: " + map.get(getValueFrom).getText());
+
+				} else {
+					// System.out.println("The value is not a fraction");
+					// System.out.println("VALUE: " + map.get(getValueFrom).getText());
+					// System.out.println("????????????????????????????? ; " +
+					// map.get(getValueFrom).getText().trim());
+					dataArray[currentRow][currentCol] = Double.parseDouble(map.get(getValueFrom).getText().trim());
+				}
+
+			}
+			System.out.println(" ");
+		}
+		return dataArray;
 	}
 
 	public void operationHelper(int row1Size, int col1Size, int row2Size, int col2Size, String firstRowSize,
@@ -171,7 +293,7 @@ public class EigenController implements Initializable {
 				TextField field = new TextField();
 				field.getStyleClass().add("gridTextField");
 				gridFirstMatrix.add(field, j, i);
-				// mapTextField.put(name, field);
+				mapTextField.put(name, field);
 			}
 		}
 
@@ -181,7 +303,7 @@ public class EigenController implements Initializable {
 				TextField field = new TextField();
 				field.getStyleClass().add("gridTextField2");
 				gridSecondMatrix.add(field, j, i);
-				// mapTextField2.put(name, field);
+				mapTextField2.put(name, field);
 			}
 		}
 
