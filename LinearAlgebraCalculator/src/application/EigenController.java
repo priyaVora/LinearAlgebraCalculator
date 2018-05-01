@@ -101,7 +101,8 @@ public class EigenController implements Initializable {
 		calculateButton.setDisable(true);
 		operationChoiceBox.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-
+				gridFirstMatrix.getChildren().clear();
+				gridSecondMatrix.getChildren().clear();
 				showWorkButton.setVisible(true);
 				Integer indexSelected = operationChoiceBox.getSelectionModel().getSelectedIndex();
 				System.out.println(operationChoiceBox.getItems().get(indexSelected));
@@ -209,7 +210,7 @@ public class EigenController implements Initializable {
 	@FXML
 	private void calculateButtonAction(ActionEvent event) throws NumberFormatException, IOException {
 		System.out.println("Calculated!");
-		
+
 		String firstRowSize = firstRowSizeField.getText().trim();
 		String firstColSize = firstColSizeField.getText().trim();
 		String secondRowSize = secondRowSizeField.getText().trim();
@@ -238,7 +239,8 @@ public class EigenController implements Initializable {
 			}
 		} else if ((operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
 				.equals("Is EigenVector?(Corresponding)"))) {
-
+			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
 		}
 
 		showWorkLabel.setText("Click Far Right Button");
@@ -306,6 +308,21 @@ public class EigenController implements Initializable {
 
 			eigenCal.isEigenValue(a, currentLambda);
 
+		} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+				.equals("Is EigenVector?(Corresponding)")) {
+			double[][] dataOne = printHashMap(mapTextField, row1, col1);
+			double[][] dataTwo = printHashMap(mapTextField2, row2, col2);
+
+			Matrix resultMatrix = new Matrix();
+
+			Matrix a = new Matrix("FirstMatrix", row1, col1);
+			a.setCurrentMatrix(dataOne);
+
+			Matrix givenVector = new Matrix("SecondMatrix", row2, col2);
+			givenVector.setCurrentMatrix(dataTwo);
+			a.printMatrix();
+
+			eigenCal.isEigenVector(givenVector, a);
 		}
 
 	}
