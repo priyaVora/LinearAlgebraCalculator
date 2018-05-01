@@ -62,6 +62,9 @@ public class EigenController implements Initializable {
 	private Label lambdaLabel;
 
 	@FXML
+	private Label showWorkLabel;
+
+	@FXML
 	private TextField firstRowSizeField;
 	@FXML
 	private TextField secondRowSizeField;
@@ -151,6 +154,7 @@ public class EigenController implements Initializable {
 		mapTextField2 = new HashMap<>();
 		resultMap = new HashMap<>();
 		showWorkButton = new Button();
+		showWorkLabel = new Label();
 
 		operationChoiceBox = new ChoiceBox<String>();
 		operationTypeLabel = new Label();
@@ -197,12 +201,13 @@ public class EigenController implements Initializable {
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
 			}
 		}
-
+		showWorkLabel.setText("Click Far Right Button");
+		showWorkLabel.setVisible(true);
 	}
 
 	@FXML
 	private void setAction() {
-
+		showWorkLabel.setVisible(false);
 		gridFirstMatrix.getChildren().clear();
 		gridSecondMatrix.getChildren().clear();
 		int operationIndexSelected = operationChoiceBox.getSelectionModel().getSelectedIndex();

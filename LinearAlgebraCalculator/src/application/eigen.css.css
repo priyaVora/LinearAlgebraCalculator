@@ -3,6 +3,10 @@
 	-fx-font-size: 25.0px;
 	
 }
+#showWorkLabel { 
+		-fx-text-fill: white;
+	-fx-font-size: 18.0px;
+}
 #scrollMatrixOne { 
 	-fx-background-color: black;
 }

@@ -62,5 +62,6 @@
     <TextField fx:id="lambdaField" layoutX="325.0" layoutY="117.0" prefHeight="27.0" prefWidth="237.0" text="" />
     <Label fx:id="lambaLabel" layoutX="271.0" layoutY="117.0" prefHeight="27.0" prefWidth="28.0" text="λ:" />
     <Button fx:id="Back" layoutX="22.0" layoutY="191.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
+    <Label fx:id="showWorkLabel" layoutX="155.0" layoutY="191.0" prefWidth="265.0" text="" />
   </children>
 </AnchorPane>
