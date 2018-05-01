@@ -180,13 +180,24 @@ public class EigenController implements Initializable {
 		String lambdaValue = lambdaField.getText().trim();
 		System.out.println("Lambda Value: " + lambdaValue);
 
-		if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-				.equals("Is EigenValue?")) {
-			currentLambda = Double.parseDouble(lambdaValue);
+		if (lambdaValue == null || lambdaValue.isEmpty()) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText("Lambda Value must not be left empty.");
+			alert.setContentText("Please set the value to prooceed!");
 
-			matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
-					Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+			alert.showAndWait();
+		} else {
+
+			if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+					.equals("Is EigenValue?")) {
+				currentLambda = Double.parseDouble(lambdaValue);
+
+				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
+						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+			}
 		}
+
 	}
 
 	@FXML
