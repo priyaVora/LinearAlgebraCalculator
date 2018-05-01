@@ -792,6 +792,11 @@ public class CalculatorScreen implements Initializable {
 
 	}
 
+	
+	public void loadEigenScreen() { 
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/EigenCalculationScreen.fxml"));
+
+	}
 	public void load(int row, int col, int row2, int col2) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowWorkScreen.fxml"));
 
