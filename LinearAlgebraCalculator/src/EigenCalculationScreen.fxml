@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="734.0" prefWidth="592.0000999999975" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.EigenController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="747.0" prefWidth="592.0000999999975" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.EigenController">
   <children>
     <TextField fx:id="secondRowSizeField" layoutX="406.0" layoutY="538.0" prefWidth="87.0" promptText="" />
     <TextField fx:id="firstRowSizeField" layoutX="128.0" layoutY="538.0" prefWidth="87.0" promptText="" />
@@ -60,7 +60,7 @@
     <Button fx:id="setButton" layoutX="482.0" layoutY="644.0" mnemonicParsing="false" onAction="#setAction" prefWidth="99.0" text="Set" />
     <Button fx:id="showWorkButton" layoutX="554.0" layoutY="15.0" minHeight="20.0" minWidth="28.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="28.0" text="+" />
     <TextField fx:id="lambdaField" layoutX="325.0" layoutY="117.0" prefHeight="27.0" prefWidth="237.0" text="" />
-    <Label fx:id="lambaLabel" layoutX="271.0" layoutY="117.0" prefHeight="27.0" prefWidth="28.0" text="λ:" />
+    <Label fx:id="lambdaLabel" layoutX="271.0" layoutY="117.0" prefHeight="27.0" prefWidth="28.0" text="λ:" />
     <Button fx:id="Back" layoutX="22.0" layoutY="191.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
     <Label fx:id="showWorkLabel" layoutX="155.0" layoutY="191.0" prefWidth="265.0" text="" />
   </children>

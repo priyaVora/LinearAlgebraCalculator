@@ -121,7 +121,28 @@ public class EigenController implements Initializable {
 
 					setButton.setDisable(false);
 					calculateButton.setDisable(false);
+
+					lambdaLabel.setVisible(true);
+					lambdaField.setVisible(true);
+					lambdaField.clear();
 					lambdaField.setPromptText("Enter λ Value Here");
+
+				} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+						.equals("Is EigenVector?(Corresponding)")) {
+
+					lambdaLabel.setVisible(false);
+					lambdaField.setVisible(false);
+
+					dimension2.setDisable(false);
+
+					secondRowSizeField.clear();
+					secondColSizeField.clear();
+
+					secondRowSizeField.setDisable(false);
+					secondColSizeField.setDisable(false);
+
+					setButton.setDisable(false);
+					calculateButton.setDisable(false);
 
 				}
 
@@ -140,6 +161,15 @@ public class EigenController implements Initializable {
 					try {
 						Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
 								+ "\\MatrixShowWork" + "\\IsEigenValue.txt"));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+						.equals("Is EigenVector?(Corresponding)")) {
+					try {
+						Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
+								+ "\\MatrixShowWork" + "\\IsEigenVector.txt"));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -171,12 +201,15 @@ public class EigenController implements Initializable {
 		secondColSizeField = new TextField();
 		dimension1 = new Button();
 		dimension2 = new Button();
+		lambdaField = new TextField();
+		lambdaLabel = new Label();
 
 	}
 
 	@FXML
 	private void calculateButtonAction(ActionEvent event) throws NumberFormatException, IOException {
 		System.out.println("Calculated!");
+		
 		String firstRowSize = firstRowSizeField.getText().trim();
 		String firstColSize = firstColSizeField.getText().trim();
 		String secondRowSize = secondRowSizeField.getText().trim();
@@ -184,23 +217,30 @@ public class EigenController implements Initializable {
 		String lambdaValue = lambdaField.getText().trim();
 		System.out.println("Lambda Value: " + lambdaValue);
 
-		if (lambdaValue == null || lambdaValue.isEmpty()) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Information Dialog");
-			alert.setHeaderText("Lambda Value must not be left empty.");
-			alert.setContentText("Please set the value to prooceed!");
+		if ((operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+				.equals("Is EigenValue?"))) {
+			lambdaLabel.setVisible(true);
+			lambdaField.setVisible(true);
+			if (lambdaValue == null || lambdaValue.isEmpty()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText("Lambda Value must not be left empty.");
+				alert.setContentText("Please set the value to prooceed!");
 
-			alert.showAndWait();
-		} else {
+				alert.showAndWait();
+			} else {
 
-			if (operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-					.equals("Is EigenValue?")) {
 				currentLambda = Double.parseDouble(lambdaValue);
 
 				matrixOperation(Integer.parseInt(firstRowSize), Integer.parseInt(firstColSize),
 						Integer.parseInt(secondRowSize), Integer.parseInt(secondColSize));
+
 			}
+		} else if ((operationChoiceBox.getItems().get(operationChoiceBox.getSelectionModel().getSelectedIndex())
+				.equals("Is EigenVector?(Corresponding)"))) {
+
 		}
+
 		showWorkLabel.setText("Click Far Right Button");
 		showWorkLabel.setVisible(true);
 	}
