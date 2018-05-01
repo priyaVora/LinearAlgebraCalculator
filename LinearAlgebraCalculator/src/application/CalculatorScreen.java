@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -792,11 +793,28 @@ public class CalculatorScreen implements Initializable {
 
 	}
 
-	
-	public void loadEigenScreen() { 
+	public void loadEigenScreen(ActionEvent event) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/EigenCalculationScreen.fxml"));
+		Parent root;
+		try {
+			root = loader.load();
+			EigenController controller = loader.getController();
+
+			// call method from controller to set Data
+			Stage stage = new Stage();
+			stage.setTitle("EigenValue");
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+			scene.getStylesheets().add(Main.class.getResource("eigen.css.css").toExternalForm());
+			// Hide this current window (if this is what you want)
+			((Node) (event.getSource())).getScene().getWindow().hide();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 
 	}
+
 	public void load(int row, int col, int row2, int col2) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/ShowWorkScreen.fxml"));
 
@@ -881,6 +899,8 @@ public class CalculatorScreen implements Initializable {
 					secondRowSizeField.setDisable(true);
 					secondColSizeField.setDisable(true);
 
+				} else if (operationChoiceBox.getItems().get(indexSelected).equals("Eigen Calculations")) {
+					loadEigenScreen(e);
 				} else {
 					gridSecondMatrix.setDisable(false);
 					secondRowSizeField.setDisable(false);
@@ -995,35 +1015,6 @@ public class CalculatorScreen implements Initializable {
 						try {
 							Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
 									+ "\\MatrixShowWork" + "\\+InverseMatrix.txt"));
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					} else if (operationChoiceBox.getItems()
-							.get(operationChoiceBox.getSelectionModel().getSelectedIndex()).equals("Is EigenValue?")) {
-						try {
-							Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
-									+ "\\MatrixShowWork" + "\\IsEigenValue.txt"));
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					} else if (operationChoiceBox.getItems()
-							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-							.equals("Is EigenVector?(Corresponding)")) {
-						try {
-							Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
-									+ "\\MatrixShowWork" + "\\IsEigenVector.txt"));
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					} else if (operationChoiceBox.getItems()
-							.get(operationChoiceBox.getSelectionModel().getSelectedIndex())
-							.equals("Find Eigen Values?")) {
-						try {
-							Desktop.getDesktop().open(new java.io.File(System.getProperty("user.home") + "/Desktop"
-									+ "\\MatrixShowWork" + "\\FindEigenValues.txt"));
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();

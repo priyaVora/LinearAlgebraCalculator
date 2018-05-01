@@ -49,10 +49,8 @@
 					<String fx:value="Rotation by X-Axis" />
 					<String fx:value="Rotation by Y-Axis" />
 					<String fx:value="Rotation by Z-Axis" />
-					<String fx:value="Is EigenValue?" />
-					<String fx:value="Is EigenVector?(Corresponding)" />
-					<String fx:value="Find Eigen Values?" />
-					<String fx:value="Matrix Diagonalization" />
+					<String fx:value="Eigen Calculations" />
+					
 				</FXCollections>
 			</items>
 		</ChoiceBox>

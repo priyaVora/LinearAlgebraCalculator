@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -31,90 +32,97 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Matrix;
 
-public class ShowScreenController implements Initializable {
-	int showWorkRow = 0;
-	int showWorkCol = 0;
-	int showAnswerRow = 0;
-	int showAnswerCol = 0;
-
-	String[][] answer;
-	String[][] showWork;
+public class EigenController implements Initializable {
+	@FXML
+	private Button Back;
 
 	@FXML
-	private GridPane gridOne;
+	private Button calculateButton;
 	@FXML
-	private GridPane gridPaneTwo;
+	private Button showWorkButton;
+	@FXML
+	private GridPane gridFirstMatrix;
+	@FXML
+	private GridPane gridSecondMatrix;
 
-	public ShowScreenController() {
-		gridOne = new GridPane();
-		gridPaneTwo = new GridPane();
-	}
+	@FXML
+	private TextField lambdaField;
+	@FXML
+	private Label lambdaLabel;
 
-	public void resetControls(int row, int col, int row2, int col2) {
-		showWorkRow = row;
-		showWorkCol = col;
-
-		showAnswerRow = row2;
-		showAnswerCol = col2;
-
-		answer = new String[row][col];
-
-		showWork = new String[row][col];
-	}
-
-	public void setFirstGrid() {
-		if (showWork != null) {
-			gridOne.getChildren().clear();
-			for (int i = 0; i < showWorkRow; i++) {
-				for (int j = 0; j < showWorkCol; j++) {
-					TextField field = new TextField();
-					field.setText(showWork[i][j]);
-					field.setPrefWidth(field.getText().length() * 14);
-
-					field.getStyleClass().add("gridTextField2");
-					gridOne.add(field, j, i);
-				}
-			}
-		}
-
-		for (int i = 0; i < showAnswerRow; i++) {
-			for (int j = 0; j < showAnswerCol; j++) {
-				if (answer != null) {
-					TextField field = new TextField();
-					System.out.println("Is field null: " + field);
-					System.out.println("Is answer null: " + answer[i][j]);
-					if (answer[i][j] != null) {
-						field.setText(answer[i][j]);
-						field.setPrefWidth(field.getText().length() * 14);
-						field.getStyleClass().add("gridTextField2");
-						gridPaneTwo.add(field, j, i);
-					}
-
-				}
-
-			}
-		}
-	}
+	@FXML
+	private GridPane resultGrid;
+	@FXML
+	private TextField firstRowSizeField;
+	@FXML
+	private TextField secondRowSizeField;
+	@FXML
+	private TextField firstColSizeField;
+	@FXML
+	private TextField secondColSizeField;
+	@FXML
+	private Label operationTypeLabel;
+	@FXML
+	private ChoiceBox<String> operationChoiceBox;
+	@FXML
+	private Button dimension1;
+	@FXML
+	private Button dimension2;
+	@FXML
+	private Button setButton;
+	@FXML
+	private Pane firstMatrix;
+	@FXML
+	private Pane secondMatrix;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		operationChoiceBox.setOnAction(new EventHandler<ActionEvent>() {
 
+			public void handle(ActionEvent e) {
+				showWorkButton.setVisible(true);
+				Integer indexSelected = operationChoiceBox.getSelectionModel().getSelectedIndex();
+				System.out.println(operationChoiceBox.getItems().get(indexSelected));
+				operationTypeLabel.setText(operationChoiceBox.getItems().get(indexSelected));
+
+				setButton.setDisable(false);
+				calculateButton.setDisable(false);
+			}
+		});
 	}
 
-	public String[][] getAnswer() {
-		return answer;
+	@FXML
+	private void calculateButtonAction(ActionEvent event) throws NumberFormatException, IOException {
+		System.out.println("Calculated!");
 	}
 
-	public void setAnswer(String[][] answer) {
-		this.answer = answer;
+	@FXML
+	private void setAction() {
+		System.out.println("Set Action!");
 	}
 
-	public String[][] getShowWork() {
-		return showWork;
-	}
+	@FXML
+	private void backAction(ActionEvent e) {
+		System.out.println("Back!");
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/CalculatorScreen.fxml"));
+		Parent root;
+		try {
+			root = loader.load();
+			CalculatorScreen controller = loader.getController();
 
-	public void setShowWork(String[][] showWork) {
-		this.showWork = showWork;
+			// call method from controller to set Data
+			Stage stage = new Stage();
+			stage.setTitle("Linear Algebra Calculator");
+			Scene scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+			scene.getStylesheets().add(Main.class.getResource("application.css").toExternalForm());
+			// Hide this current window (if this is what you want)
+			((Node) (e.getSource())).getScene().getWindow().hide();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 	}
 
 }
