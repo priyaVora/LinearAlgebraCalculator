@@ -339,9 +339,9 @@ public class CalculatorScreen implements Initializable {
 				secondRowSizeField.setText("0");
 				secondRowSizeField.setDisable(true);
 				secondColSizeField.setDisable(true);
+
 			}
 
-			System.out.println("IS EMPTY" + firstColSizeField.getLength());
 		} else {
 
 			if (Integer.parseInt(firstRowSize) < 7 && Integer.parseInt(firstColSize) < 7
@@ -364,7 +364,8 @@ public class CalculatorScreen implements Initializable {
 					secondRowSizeField.setText("0");
 					secondRowSizeField.setDisable(true);
 					secondColSizeField.setDisable(true);
-
+					dimension1.setDisable(false);
+					dimension1.setText(firstRowSize + "X" + firstColSize);
 					determinantAndInverseOperationSettings();
 				} else {
 					System.out.println("User has not selected any operation...");
